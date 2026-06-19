@@ -3,78 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helikos Testpad</title>
+    <title>Helikos Labs — AI-native apps from Mount Helicon</title>
+    <meta name="description" content="Helikos Labs builds small, AI-native apps — interactive comics, transcription, semantic memory, and gamified music learning. Each lives on its own helikos.dev subdomain.">
+    <meta property="og:title" content="Helikos Labs">
+    <meta property="og:description" content="A workshop for AI-native utilities, semantic engines, and experimental cognitive tooling.">
+    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+        .font-mono, .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+        /* Subtle animated aurora behind the hero */
+        .aurora {
+            background:
+                radial-gradient(40rem 40rem at 15% -10%, rgba(16,185,129,0.18), transparent 60%),
+                radial-gradient(35rem 35rem at 90% 0%, rgba(45,212,191,0.12), transparent 60%);
+        }
+        .grid-overlay {
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(60rem 40rem at 50% 0%, black, transparent 75%);
+        }
+        .card-glow:hover { box-shadow: 0 0 0 1px rgba(16,185,129,0.4), 0 12px 40px -12px rgba(16,185,129,0.25); }
+        @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+        .floaty { animation: floaty 6s ease-in-out infinite; }
+    </style>
 </head>
-<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col justify-between font-sans">
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col antialiased selection:bg-emerald-500/30">
 
-    <!-- Header -->
-    <header class="border-b border-gray-800 py-6 px-8 max-w-6xl mx-auto w-full">
-        <div class="flex justify-between items-center">
-            <h1 class="text-xl font-mono tracking-widest text-emerald-400 font-bold">HELIKOS // TESTPAD</h1>
-            <span class="text-xs bg-gray-900 border border-gray-700 px-3 py-1 rounded-full text-gray-400">Status: Active</span>
+    <!-- Decorative background -->
+    <div class="pointer-events-none fixed inset-0 -z-10 aurora"></div>
+    <div class="pointer-events-none fixed inset-0 -z-10 grid-overlay"></div>
+
+    <!-- Nav -->
+    <header class="w-full border-b border-gray-800/80 backdrop-blur supports-[backdrop-filter]:bg-gray-950/60 sticky top-0 z-20">
+        <div class="max-w-6xl mx-auto w-full px-6 sm:px-8 py-4 flex items-center justify-between">
+            <a href="#top" class="flex items-center gap-2.5 group">
+                <span class="inline-flex h-7 w-7 items-center justify-center rounded-md bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 font-mono text-sm font-bold group-hover:bg-emerald-500/20 transition">Λ</span>
+                <span class="font-mono tracking-widest text-emerald-400 font-bold text-sm">HELIKOS<span class="text-gray-600"> // </span><span class="text-gray-300">LABS</span></span>
+            </a>
+            <nav class="flex items-center gap-6 text-sm text-gray-400">
+                <a href="#apps" class="hover:text-emerald-400 transition hidden sm:inline">Apps</a>
+                <a href="#about" class="hover:text-emerald-400 transition hidden sm:inline">About</a>
+                <a href="https://github.com/helikos-labs" class="hover:text-emerald-400 transition mono text-xs border border-gray-700 rounded-full px-3 py-1 hover:border-emerald-500/50">GitHub →</a>
+            </nav>
         </div>
-        <p class="text-sm text-gray-400 mt-2 max-w-xl">An iterative sandbox for AI-native utilities, semantic engines, and experimental cognitive tooling.</p>
     </header>
 
-    <!-- Main Content Grid -->
-    <main class="max-w-6xl mx-auto w-full px-8 py-12 flex-grow">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            <!-- Card: Athena -->
-            <div class="bg-gray-900/50 border border-gray-800 p-6 rounded-lg hover:border-emerald-500/50 transition duration-200">
-                <div class="flex justify-between items-start">
-                    <h2 class="text-lg font-semibold text-gray-200">Athena</h2>
-                    <span class="text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded">PoC</span>
-                </div>
-                <p class="text-sm text-gray-400 mt-2">AI-driven interactive comic creator utilizing generative multi-modal language models.</p>
-                <div class="mt-4 flex gap-4 text-xs font-mono">
-                    <a href="https://athena.helikos.dev" class="text-emerald-400 hover:underline">Launch App →</a>
-                </div>
+    <!-- Hero -->
+    <section id="top" class="relative overflow-hidden">
+        <div class="max-w-6xl mx-auto w-full px-6 sm:px-8 pt-20 pb-16 sm:pt-28 sm:pb-24">
+            <div class="inline-flex items-center gap-2 rounded-full border border-gray-700 bg-gray-900/60 px-3 py-1 text-xs text-gray-400 mono floaty">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                A workshop for AI-native software
+            </div>
+            <h1 class="mt-6 text-4xl sm:text-6xl font-bold tracking-tight max-w-3xl">
+                Small, sharp apps
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300"> from Mount Helicon.</span>
+            </h1>
+            <p class="mt-6 text-base sm:text-lg text-gray-400 max-w-2xl leading-relaxed">
+                Helikos Labs is an iterative sandbox for AI-native utilities, semantic engines,
+                and experimental cognitive tooling. Each project carries the name of a Greek
+                deity or Muse — and lives on its own corner of <span class="mono text-emerald-400">helikos.dev</span>.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+                <a href="#apps" class="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-gray-950 hover:bg-emerald-400 transition">
+                    Explore the apps
+                    <span aria-hidden="true">↓</span>
+                </a>
+                <a href="#about" class="inline-flex items-center gap-2 rounded-lg border border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-300 hover:border-emerald-500/50 hover:text-emerald-400 transition">
+                    What is Helikos?
+                </a>
             </div>
 
-            <!-- Card: Kleio -->
-            <div class="bg-gray-900/50 border border-gray-800 p-6 rounded-lg hover:border-emerald-500/50 transition duration-200">
-                <div class="flex justify-between items-start">
-                    <h2 class="text-lg font-semibold text-gray-200">Kleio</h2>
-                    <span class="text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded">PoC</span>
+            <!-- Quick stats -->
+            <dl class="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-px overflow-hidden rounded-xl border border-gray-800 bg-gray-800 max-w-3xl">
+                <div class="bg-gray-950/80 px-5 py-4">
+                    <dt class="text-xs text-gray-500 mono">Live apps</dt>
+                    <dd class="mt-1 text-2xl font-bold text-gray-100">4</dd>
                 </div>
-                <p class="text-sm text-gray-400 mt-2">Automated audio transcription platform powered by high-fidelity speech-to-text models.</p>
-                <div class="mt-4 flex gap-4 text-xs font-mono">
-                    <a href="https://kleio.helikos.dev" class="text-emerald-400 hover:underline">Launch App →</a>
+                <div class="bg-gray-950/80 px-5 py-4">
+                    <dt class="text-xs text-gray-500 mono">Domain</dt>
+                    <dd class="mt-1 text-lg font-bold text-emerald-400 mono">helikos.dev</dd>
                 </div>
-            </div>
+                <div class="bg-gray-950/80 px-5 py-4">
+                    <dt class="text-xs text-gray-500 mono">Theme</dt>
+                    <dd class="mt-1 text-lg font-bold text-gray-100">Muses & gods</dd>
+                </div>
+                <div class="bg-gray-950/80 px-5 py-4">
+                    <dt class="text-xs text-gray-500 mono">Status</dt>
+                    <dd class="mt-1 text-lg font-bold text-gray-100">Active</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
 
-            <!-- Card: Mnemosyne -->
-            <div class="bg-gray-900/50 border border-gray-800 p-6 rounded-lg hover:border-emerald-500/50 transition duration-200">
-                <div class="flex justify-between items-start">
-                    <h2 class="text-lg font-semibold text-gray-200">Mnemosyne</h2>
-                    <span class="text-xs bg-gray-800 text-gray-400 border border-gray-700 px-2 py-0.5 rounded">In Development</span>
-                </div>
-                <p class="text-sm text-gray-400 mt-2">Personal contextual graph database and semantic second-brain memory indexer.</p>
-                <div class="mt-4 flex gap-4 text-xs font-mono">
-                    <a href="https://mnemosyne.helikos.dev" class="text-emerald-400 hover:underline">Launch App →</a>
-                </div>
+    <!-- Apps -->
+    <main id="apps" class="max-w-6xl mx-auto w-full px-6 sm:px-8 pb-20 flex-grow scroll-mt-20">
+        <div class="flex items-end justify-between gap-4 border-b border-gray-800 pb-4">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tight">The Portfolio</h2>
+                <p class="mt-1 text-sm text-gray-500">Four projects, each a focused experiment in applied AI.</p>
             </div>
+            <span class="text-xs mono text-gray-600 hidden sm:inline">*.helikos.dev</span>
+        </div>
 
-            <!-- Card: Bitthrone -->
-            <div class="bg-gray-900/50 border border-gray-800 p-6 rounded-lg hover:border-emerald-500/50 transition duration-200">
-                <div class="flex justify-between items-start">
-                    <h2 class="text-lg font-semibold text-gray-200">Bitthrone</h2>
-                    <span class="text-xs bg-gray-800 text-gray-400 border border-gray-700 px-2 py-0.5 rounded">Experimental</span>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            <!-- Athena -->
+            <article class="group relative flex flex-col bg-gray-900/40 border border-gray-800 p-6 rounded-xl transition duration-200 card-glow">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-xl" aria-hidden="true">🦉</span>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-100">Athena</h3>
+                            <p class="text-xs text-gray-500 mono">goddess of wisdom & craft</p>
+                        </div>
+                    </div>
+                    <span class="shrink-0 text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded mono">PoC</span>
                 </div>
-                <p class="text-sm text-gray-400 mt-2">Strategic analytical modeling utility and data testing array.</p>
-                <div class="mt-4 flex gap-4 text-xs font-mono">
-                    <a href="#" class="text-gray-500 cursor-not-allowed">Coming Soon</a>
+                <p class="mt-4 text-sm text-gray-400 leading-relaxed flex-grow">
+                    An AI-driven interactive comic creator. Athena turns prompts into illustrated,
+                    branching stories using generative multi-modal language models — script, panels,
+                    and art generated together.
+                </p>
+                <div class="mt-5 pt-4 border-t border-gray-800/80 flex items-center justify-between">
+                    <span class="text-xs text-gray-600 mono">Multi-modal · storytelling</span>
+                    <a href="https://athena.helikos.dev" class="text-sm text-emerald-400 mono font-semibold hover:underline">Launch App →</a>
                 </div>
-            </div>
+            </article>
+
+            <!-- Kleio -->
+            <article class="group relative flex flex-col bg-gray-900/40 border border-gray-800 p-6 rounded-xl transition duration-200 card-glow">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-xl" aria-hidden="true">📜</span>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-100">Kleio</h3>
+                            <p class="text-xs text-gray-500 mono">muse of history</p>
+                        </div>
+                    </div>
+                    <span class="shrink-0 text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded mono">PoC</span>
+                </div>
+                <p class="mt-4 text-sm text-gray-400 leading-relaxed flex-grow">
+                    An automated audio transcription platform powered by high-fidelity speech-to-text
+                    models. Drop in a recording and Kleio chronicles it — fast, accurate, searchable text.
+                </p>
+                <div class="mt-5 pt-4 border-t border-gray-800/80 flex items-center justify-between">
+                    <span class="text-xs text-gray-600 mono">Speech-to-text · audio</span>
+                    <a href="https://kleio.helikos.dev" class="text-sm text-emerald-400 mono font-semibold hover:underline">Launch App →</a>
+                </div>
+            </article>
+
+            <!-- Mnemosyne -->
+            <article class="group relative flex flex-col bg-gray-900/40 border border-gray-800 p-6 rounded-xl transition duration-200 card-glow">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-xl" aria-hidden="true">🧠</span>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-100">Mnemosyne</h3>
+                            <p class="text-xs text-gray-500 mono">goddess of memory</p>
+                        </div>
+                    </div>
+                    <span class="shrink-0 text-xs bg-gray-800 text-gray-300 border border-gray-700 px-2 py-0.5 rounded mono">In Dev</span>
+                </div>
+                <p class="mt-4 text-sm text-gray-400 leading-relaxed flex-grow">
+                    A personal contextual graph database and semantic "second brain." Mnemosyne
+                    indexes what you know and connects it — recall by meaning, not just keywords.
+                </p>
+                <div class="mt-5 pt-4 border-t border-gray-800/80 flex items-center justify-between">
+                    <span class="text-xs text-gray-600 mono">Knowledge graph · memory</span>
+                    <a href="https://mnemosyne.helikos.dev" class="text-sm text-emerald-400 mono font-semibold hover:underline">Launch App →</a>
+                </div>
+            </article>
+
+            <!-- PianoQuest -->
+            <article class="group relative flex flex-col bg-gray-900/40 border border-gray-800 p-6 rounded-xl transition duration-200 card-glow">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-xl" aria-hidden="true">🎹</span>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-100">PianoQuest</h3>
+                            <p class="text-xs text-gray-500 mono">learn by playing</p>
+                        </div>
+                    </div>
+                    <span class="shrink-0 text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded mono">PoC</span>
+                </div>
+                <p class="mt-4 text-sm text-gray-400 leading-relaxed flex-grow">
+                    A gamified, interactive way to learn the piano. PianoQuest turns scales, chords,
+                    and sight-reading into playable quests — practice that feels like a game.
+                </p>
+                <div class="mt-5 pt-4 border-t border-gray-800/80 flex items-center justify-between">
+                    <span class="text-xs text-gray-600 mono">Music · gamified learning</span>
+                    <a href="https://pianoquest.helikos.dev" class="text-sm text-emerald-400 mono font-semibold hover:underline">Launch App →</a>
+                </div>
+            </article>
 
         </div>
     </main>
 
+    <!-- About -->
+    <section id="about" class="border-t border-gray-800 bg-gray-950/60 scroll-mt-20">
+        <div class="max-w-6xl mx-auto w-full px-6 sm:px-8 py-16 grid md:grid-cols-3 gap-10">
+            <div class="md:col-span-1">
+                <h2 class="text-2xl font-bold tracking-tight">About Helikos</h2>
+            </div>
+            <div class="md:col-span-2 space-y-4 text-gray-400 leading-relaxed">
+                <p>
+                    <span class="text-gray-200 font-semibold">Helikos</span> is Mount Helicon — in Greek
+                    myth, the home of the Muses and the spring of inspiration. Helikos Labs takes that
+                    as a brief: a place to build small, sharp, AI-native tools quickly, ship them, and
+                    learn in the open.
+                </p>
+                <p>
+                    Every project is a focused experiment rather than a sprawling platform. Some are
+                    proofs of concept, some are still in development — all are live and explorable on
+                    their own <span class="mono text-emerald-400">helikos.dev</span> subdomain.
+                </p>
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <span class="text-xs mono rounded-full border border-gray-700 px-3 py-1 text-gray-400">Multi-modal AI</span>
+                    <span class="text-xs mono rounded-full border border-gray-700 px-3 py-1 text-gray-400">Speech & audio</span>
+                    <span class="text-xs mono rounded-full border border-gray-700 px-3 py-1 text-gray-400">Knowledge graphs</span>
+                    <span class="text-xs mono rounded-full border border-gray-700 px-3 py-1 text-gray-400">Interactive learning</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="border-t border-gray-800 py-6 px-8 text-center text-xs text-gray-600 font-mono">
-        &copy; 2026 Helikos Labs. Built with precision.
+    <footer class="border-t border-gray-800 py-8 px-6 sm:px-8">
+        <div class="max-w-6xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600 mono">
+            <span>&copy; 2026 Helikos Labs. Built with precision.</span>
+            <span class="flex items-center gap-4">
+                <a href="https://github.com/helikos-labs" class="hover:text-emerald-400 transition">github.com/helikos-labs</a>
+                <span class="text-gray-700">·</span>
+                <a href="#top" class="hover:text-emerald-400 transition">Back to top ↑</a>
+            </span>
+        </div>
     </footer>
 
 </body>
