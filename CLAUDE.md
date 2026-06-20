@@ -26,17 +26,28 @@ reason to add assets. No npm, no bundler, no framework.
 
 ## Tech & conventions
 
-- **Styling:** Tailwind CSS via the CDN `<script src="https://cdn.tailwindcss.com">`.
-  Do not introduce a local Tailwind build or a `package.json` just for styling.
-- **Theme:** dark UI (`bg-gray-950`, `text-gray-100`), **emerald** accent
-  (`emerald-400`/`emerald-500`), and a `font-mono` treatment for the wordmark and
-  technical labels. Match this palette when adding sections.
-- **Responsiveness:** mobile-first; the app grid collapses to one column below
-  `md`. Test narrow widths.
-- **Accessibility:** keep semantic landmarks (`header`/`main`/`footer`),
-  meaningful link text, and sufficient contrast.
-- **Self-contained:** prefer inline markup over external assets so the page
-  renders even if a CDN is slow.
+The page uses a **warm editorial design system** modelled on the maker's personal
+site, `asvinang.github.io` (the design reference). All styling is **inline** in
+`index.html` — no Tailwind, no build, no `package.json`.
+
+- **Palette (CSS custom properties in `:root`):** cream background (`--bg: #faf9f6`,
+  `--bg-warm: #efebe9`), cocoa ink (`--ink: #3e2723` and lighter `--ink-mid`,
+  `--ink-light`, `--ink-faint`), and a **terracotta accent** (`--accent: #e64a19`).
+  Borders use `--rule` / `--rule-light`. Keep this palette when adding sections.
+- **Typography:** `Instrument Serif` for display/headings (with an italic
+  `<em>` in terracotta for emphasis), `DM Sans` for body, `JetBrains Mono` for
+  small uppercase labels/tags, `Aboreto` for the `HELIKOS·LABS` wordmark. Loaded
+  from Google Fonts.
+- **Components:** fixed blurred nav, serif hero, `.section-label` + `.section-title`
+  pattern, `.projects-grid` of `.project-card`s (each opens a detail **modal** via
+  `data-*` attributes), floating `.dot-nav`, `.toolbox-grid` stack, contact cards,
+  scroll-reveal (`.reveal` + IntersectionObserver). Icons via the `lucide` CDN.
+- **Responsiveness:** mobile-first; the app grid is `auto-fill minmax(320px, 1fr)`
+  and collapses to one column on narrow screens; dot-nav hides under `768px`.
+- **Accessibility:** semantic landmarks, focusable cards, Escape-to-close modal,
+  meaningful link text, sufficient contrast.
+- **Self-contained:** CSS/JS are inline; only fonts and `lucide` icons load from a
+  CDN, and the page degrades gracefully if they are slow.
 
 ## The Helikos naming theme
 
@@ -47,18 +58,23 @@ name, a one-line "what it does," a status badge, and a `Launch App →` link to
 
 ## The apps (portfolio)
 
-> Source repos live under the private `helikos-labs` org and are not readable
-> from this Pages repo's session. Descriptions here are the canonical
-> marketing copy for the landing page — update them in lockstep with `index.html`.
+> Source repos live under the private `helikos-labs` org. The descriptions below
+> were verified from those repos (via GitHub code search of `index.html`/`package.json`/
+> `CLAUDE.md`) and from the maker's portfolio at `asvinang.github.io`. They are the
+> canonical marketing copy — update them in lockstep with `index.html`. Apps are
+> hosted on **Cloudflare Pages** (`*.pages.dev`) and served at `*.helikos.dev`.
 
-| App         | Subdomain                   | One-liner                                                        | Status         |
-|-------------|-----------------------------|------------------------------------------------------------------|----------------|
-| Athena      | athena.helikos.dev          | AI-driven interactive comic creator using multi-modal models     | Proof of Concept |
-| Kleio       | kleio.helikos.dev           | Automated audio transcription via high-fidelity speech-to-text   | Proof of Concept |
-| Mnemosyne   | mnemosyne.helikos.dev       | Personal contextual graph DB / semantic "second brain"           | In Development |
-| PianoQuest  | pianoquest.helikos.dev      | Gamified, interactive piano learning and practice                | Proof of Concept |
+| App         | Subdomain                | What it is                                                                                  | Status         |
+|-------------|--------------------------|---------------------------------------------------------------------------------------------|----------------|
+| Athena      | athena.helikos.dev       | AI Creative Studio — build worlds, write novels, generate comics; photoreal writing "Study" | Proof of Concept |
+| Kleio       | kleio.helikos.dev        | Precision browser transcription; static frontend + serverless speech-to-text (Whisper/Cloud Run) | Proof of Concept |
+| Mnemosyne   | mnemosyne.helikos.dev    | 3D knowledge galaxy — a personal "second brain" as a navigable Three.js universe of notes   | In Development |
+| PianoQuest  | pianoquest.helikos.dev   | RPG-style game that turns piano practice into a quest across five worlds                     | Proof of Concept |
 
 Status badges used on the page: `PoC`, `In Development`, `Experimental`.
+
+**Not yet on the page:** `kybos.helikos.dev` (`kybos` repo) exists in DNS but its
+repo had no readable content at last check — add a card once it has real copy.
 
 ## Editing the landing page
 
