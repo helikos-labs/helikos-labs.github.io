@@ -32,73 +32,62 @@ rather than editing the PNG by hand — the generator is dependency-free (Node's
 
 ## Tech & conventions
 
-The site has its **own mythic identity** — "As Above, So Below: The Helikos
-Mechanism" — deliberately distinct from the maker's portfolio. The concept is a
-vertical descent from the heavens to the mountain, themed on Mount Helicon (home
-of the Muses) and the **Antikythera mechanism** (the first computer was Greek).
-All styling/JS is **inline** in `index.html` — no Tailwind, no build, no `package.json`.
+The site keeps its **mythic identity** — "As Above, So Below" — themed on Mount
+Helicon (home of the Muses) and the **Antikythera mechanism** (the first computer
+was Greek), but expresses it through a **minimalist, typography-led** layout: lots
+of negative space, brass-on-midnight, and a clean card grid rather than ornate SVG
+scenery. All styling/JS is **inline** in `index.html` — no Tailwind, no build, no
+`package.json`.
 
 - **Palette (CSS custom properties in `:root`):** deep midnight (`--void: #080b14`,
-  `--night`, `--night-2`), a `--horizon`/`--dawn` amber glow at the mountain base,
-  warm starlight (`--star: #f5f0e3`), cool mist text (`--mist`, `--mist-dim`), and
-  a **brass/gold accent** (`--brass: #c9a227`, `--brass-light`, `--brass-deep`)
-  with an `--aegean` secondary. Keep brass-on-midnight when adding sections.
+  `--night`), warm starlight (`--star: #f5f0e3`), cool mist text (`--mist`,
+  `--mist-dim`), and a **brass/gold accent** (`--brass: #c9a227`, `--brass-light`,
+  `--brass-deep`) with a faint `--line` brass rule colour. Keep brass-on-midnight
+  when adding sections; the variable set is intentionally lean.
 - **Typography:** `Cinzel` (inscriptional caps) for the wordmark, section titles,
   and app names; `Cormorant Garamond` for serif body/taglines (italic for lede);
   `JetBrains Mono` for small uppercase labels. Loaded from Google Fonts.
 - **Two realms — "As Above, So Below":** the site splits apps into **gods**
-  (utilities, in the heavens) and **games** (in the stadium below).
-- **Structure (top → bottom):** fixed nav with a mountain+star **sigil**; HERO
-  "the Heavens" (generated starfield + a rotating SVG **orrery** = Antikythera
-  motif); **Constellation** ("Gods in the Stars") where each *god* app is an
-  interactive `.star` in an SVG starmap (plus dim `.future-star`s); a `.mountband`
-  Mount Helicon silhouette with rays + dawn glow; **Pantheon** `.colonnade` of
-  `.column` shrines (the built gods + a `.future` "Asleep" column); **Stadium**
-  ("Games in the Arena") — a torchlit amphitheater (`.theatron` SVG) of `.niche`
-  alcoves with flickering `.brazier`/`.flame`, one per *game* + an `.empty` lane;
-  a **Lore** section; footer.
-- **Two modals:** gods (stars + columns, `data-app`) open the brass **shrine
-  modal** (`#shrine`) from the `APPS` object; games (niches, `data-game`) open the
-  torchlit **arena modal** (`#arena`) from the `GAMES` object. Games without a live
-  URL (`live: null`) show a status pill instead of an "Enter the Arena" button.
-- **Adding a god:** add to `APPS`, a `<g class="star" data-app="…">` in the
-  starmap, and a `.column` in the colonnade. **Adding a game:** add to `GAMES` and
-  a `.niche` (with `data-game`) in `.niches`. Convert a `.future`/`.empty`
-  placeholder into a real one as the lab grows.
-- **Responsiveness:** fluid `clamp()` type; colonnade & niches are
-  `auto-fit minmax(~180px,1fr)`; nav links hide under `640px`.
-- **Accessibility:** stars/columns/niches are focusable (`tabindex`,
-  `role="button"`), Escape closes either modal, `prefers-reduced-motion` disables
-  the orrery/twinkle/flame.
-- **Section paging:** a fixed `.dot-nav` (right edge) tracks the active stage via
-  IntersectionObserver and jumps to `#heavens/#constellation/#pantheon/#stadium/#lore`.
-  Full-screen CSS **scroll-snap** is a progressive enhancement, enabled only on
-  roomy desktops with motion (`min-width:769px and min-height:700px and
-  prefers-reduced-motion:no-preference`); touch/short/reduced-motion users keep
-  normal scrolling. `scroll-padding-top:60px` clears the fixed nav. Modals stay as
-  in-place overlays, so each stage behaves SPA-like once parked.
-- **Self-contained:** CSS/JS inline; only Google Fonts load remotely; SVG art is
-  hand-rolled (no icon CDN), so the page degrades gracefully.
+  (utilities, "As Above") and **games** ("So Below"), each its own section.
+- **Structure (top → bottom):** fixed minimal nav with a mountain+star **sigil**
+  + `HELIKOS LABS` wordmark and `Gods / Games / Lore` links; a **typographic hero**
+  (large sigil mark, `HELIKOS` wordmark, tagline, lede — a single soft brass radial
+  glow, no orrery/starfield); a **Gods** section (`#gods`) of `.card`s in a `.grid`;
+  a hairline `.realm-rule` divider; a **Games** section (`#games`) of `.card`s; a
+  **Lore** section; footer. No mountband, colonnade, theatron, braziers, modals, or
+  dot-nav — those were removed in the minimalist redo.
+- **Cards:** each app is a self-contained `.card` (no modals, no JS data objects) —
+  glyph (Greek letter / `♪`), `.card-name`, `.card-role`, `.card-desc`, and a
+  `.card-foot` with an `Enter →` `.card-link` (live apps) plus a `.card-status`
+  pill. Unbuilt apps use `.card.is-dormant` (dimmed glyph/role, no hover lift) and
+  show only a status pill — no link. Live status pills get `.card-status.live`.
+- **Adding a god/game:** add an `<article class="card">` (or `.card.is-dormant`)
+  to the matching `.grid`. Copy lives directly in the HTML — keep it in lockstep
+  with the tables below. There are no `APPS`/`GAMES` JS objects anymore.
+- **Responsiveness:** fluid `clamp()` type; grids are `auto-fit minmax(290px,1fr)`;
+  nav links hide under `600px`.
+- **Accessibility:** the only interactive elements are links (`a:focus-visible`
+  gets a brass outline); `prefers-reduced-motion` disables smooth scroll and the
+  reveal transition (content shown at once).
+- **Self-contained:** CSS/JS inline; only Google Fonts load remotely; the sigil is
+  hand-rolled SVG (no icon CDN), so the page degrades gracefully.
 - **Head / SEO / sharing:** `<head>` carries canonical, full OpenGraph + Twitter
   `summary_large_image` tags (pointing at `og-image.png`), a JSON-LD
   `Organization` block, `color-scheme: dark`, and an **inline SVG favicon**
   (the mountain+star sigil as a `data:` URI — no file). Keep these in sync with
   the live domain `https://www.helikos.dev/`.
-- **Scroll-reveal:** elements with `.reveal` fade/rise via `.in`, toggled by an
-  IntersectionObserver; applied to each `.sec-head`, the `.colonnade`, `.niches`,
-  and the lore teaser. Neutralized under `prefers-reduced-motion` (shown at once)
-  and when IO is unavailable. A `.forge` "pipeline teaser" line in **Lore** hints
-  at unbuilt apps without naming specifics.
-- **Focus:** a shared `:focus-visible` rule gives columns/niches/dots/links a
-  brass outline; stars keep their custom halo focus state.
+- **Scroll-reveal:** elements with `.reveal` fade/rise via `.in`, toggled by one
+  small IntersectionObserver IIFE; applied to each `.sec-head` and each `.grid`.
+  Neutralized under `prefers-reduced-motion` (shown at once) and when IO is
+  unavailable. This is the page's only script.
 
 ## The Helikos naming theme
 
 Helikos (Mount Helicon, home of the Muses) — apps are named after Greek
-deities and Muses. **Gods** (utilities) live in the heavens/pantheon with a
-**domain/role** (e.g. "Muse of History") and an `Enter <App> →` shrine link.
-**Games** live in the stadium with a **contest** name (e.g. "The Pythian Contest")
-and an `Enter the Arena →` link. Both follow `https://<name>.helikos.dev`.
+deities and Muses. **Gods** (utilities, "As Above") carry a short **role/category**
+(e.g. "Precision Transcription"); **Games** ("So Below") carry a **type**
+(e.g. "Music · RPG"). Both surface an `Enter →` link to `https://<name>.helikos.dev`
+when live. Keep the role/type lines terse.
 
 ## The apps (portfolio)
 
@@ -144,6 +133,6 @@ deploys. No manual build or release step.
 
 - Do not add a toolchain (npm/bundler/framework) to a static one-file site
   without explicit user approval.
-- Keep the emerald-on-dark, mono-accent visual identity consistent.
+- Keep the brass-on-midnight, typography-led minimalist identity consistent.
 - App marketing copy that can't be verified against live apps or source repos
   should be flagged to the user rather than invented as fact.
