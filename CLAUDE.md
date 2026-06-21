@@ -26,35 +26,45 @@ reason to add assets. No npm, no bundler, no framework.
 
 ## Tech & conventions
 
-The page uses a **warm editorial design system** modelled on the maker's personal
-site, `asvinang.github.io` (the design reference). All styling is **inline** in
-`index.html` — no Tailwind, no build, no `package.json`.
+The site has its **own mythic identity** — "As Above, So Below: The Helikos
+Mechanism" — deliberately distinct from the maker's portfolio. The concept is a
+vertical descent from the heavens to the mountain, themed on Mount Helicon (home
+of the Muses) and the **Antikythera mechanism** (the first computer was Greek).
+All styling/JS is **inline** in `index.html` — no Tailwind, no build, no `package.json`.
 
-- **Palette (CSS custom properties in `:root`):** cream background (`--bg: #faf9f6`,
-  `--bg-warm: #efebe9`), cocoa ink (`--ink: #3e2723` and lighter `--ink-mid`,
-  `--ink-light`, `--ink-faint`), and a **terracotta accent** (`--accent: #e64a19`).
-  Borders use `--rule` / `--rule-light`. Keep this palette when adding sections.
-- **Typography:** `Instrument Serif` for display/headings (with an italic
-  `<em>` in terracotta for emphasis), `DM Sans` for body, `JetBrains Mono` for
-  small uppercase labels/tags, `Aboreto` for the `HELIKOS·LABS` wordmark. Loaded
-  from Google Fonts.
-- **Components:** fixed blurred nav, serif hero, `.section-label` + `.section-title`
-  pattern, `.projects-grid` of `.project-card`s (each opens a detail **modal** via
-  `data-*` attributes), floating `.dot-nav`, `.toolbox-grid` stack, contact cards,
-  scroll-reveal (`.reveal` + IntersectionObserver). Icons via the `lucide` CDN.
-- **Responsiveness:** mobile-first; the app grid is `auto-fill minmax(320px, 1fr)`
-  and collapses to one column on narrow screens; dot-nav hides under `768px`.
-- **Accessibility:** semantic landmarks, focusable cards, Escape-to-close modal,
-  meaningful link text, sufficient contrast.
-- **Self-contained:** CSS/JS are inline; only fonts and `lucide` icons load from a
-  CDN, and the page degrades gracefully if they are slow.
+- **Palette (CSS custom properties in `:root`):** deep midnight (`--void: #080b14`,
+  `--night`, `--night-2`), a `--horizon`/`--dawn` amber glow at the mountain base,
+  warm starlight (`--star: #f5f0e3`), cool mist text (`--mist`, `--mist-dim`), and
+  a **brass/gold accent** (`--brass: #c9a227`, `--brass-light`, `--brass-deep`)
+  with an `--aegean` secondary. Keep brass-on-midnight when adding sections.
+- **Typography:** `Cinzel` (inscriptional caps) for the wordmark, section titles,
+  and app names; `Cormorant Garamond` for serif body/taglines (italic for lede);
+  `JetBrains Mono` for small uppercase labels. Loaded from Google Fonts.
+- **Structure (top → bottom):** fixed nav with a mountain+star **sigil**; HERO
+  "the Heavens" (generated starfield + a rotating SVG **orrery** = Antikythera
+  motif); **Constellation** section where each app is an interactive `.star` in an
+  SVG starmap (plus dim `.future-star`s for unbuilt apps); a `.mountband` Mount
+  Helicon silhouette with light rays + dawn glow; **Pantheon** `.colonnade` of
+  `.column` shrines (one per app + a `.future` "Asleep" column); a **Lore**
+  section; footer. Both stars and columns carry `data-app` and open the same
+  **shrine modal** (`#shrine`), populated from the `APPS` object in JS.
+- **Adding an app:** add an entry to the `APPS` object, a `<g class="star"
+  data-app="…">` in the starmap, and a `.column` in the colonnade. Convert a
+  `.future` star/column into a real one as the lab grows.
+- **Responsiveness:** fluid `clamp()` type; colonnade is `auto-fit minmax(180px,1fr)`;
+  nav links hide under `640px`.
+- **Accessibility:** stars/columns are focusable (`tabindex`, `role="button"`),
+  Escape closes the modal, `prefers-reduced-motion` disables the orrery/twinkle.
+- **Self-contained:** CSS/JS inline; only Google Fonts load remotely; SVG art is
+  hand-rolled (no icon CDN), so the page degrades gracefully.
 
 ## The Helikos naming theme
 
 Helikos (Mount Helicon, home of the Muses) — apps are named after Greek
-deities and Muses. When adding an app card, follow the convention: a mythic
-name, a one-line "what it does," a status badge, and a `Launch App →` link to
-`https://<name>.helikos.dev`.
+deities and Muses. When adding an app, follow the convention: a mythic name, the
+deity's **domain/role** (e.g. "Muse of History"), a one-line "what it does," a
+status, and an `Enter <App> →` link to `https://<name>.helikos.dev`. Apps appear
+twice — as a star in the constellation and as a shrine column in the pantheon.
 
 ## The apps (portfolio)
 
