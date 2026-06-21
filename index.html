@@ -40,7 +40,19 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   ::-webkit-scrollbar { width: 0; display: none; }
-  html { scrollbar-width: none; scroll-behavior: smooth; }
+  html { scrollbar-width: none; scroll-behavior: smooth; scroll-padding-top: 60px; }
+
+  /* ── SECTION SNAP — full-screen stages, paged like an SPA.
+     Enabled only on roomy desktops with motion allowed, so tall content
+     and touch/reduced-motion users keep normal scrolling. ── */
+  @media (min-width: 769px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
+    html { scroll-snap-type: y mandatory; }
+    #heavens, #constellation, #pantheon, #stadium, #lore {
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+  }
   body {
     background: var(--void);
     color: var(--mist);
@@ -75,6 +87,15 @@
   .nav-links a { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mist-dim); transition: color .2s; }
   .nav-links a:hover { color: var(--brass-light); }
   @media (max-width: 640px){ .nav-links { display: none; } }
+
+  /* ── DOT-NAV PAGER ── */
+  .dot-nav { position: fixed; right: 22px; top: 50%; transform: translateY(-50%); z-index: 85; display: flex; flex-direction: column; gap: 16px; }
+  .dot-nav .dot { position: relative; width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--brass-deep); background: transparent; transition: all .3s; }
+  .dot-nav .dot:hover { border-color: var(--brass-light); }
+  .dot-nav .dot.active { background: var(--brass); border-color: var(--brass); box-shadow: 0 0 10px rgba(201,162,39,0.8); transform: scale(1.3); }
+  .dot-nav .dot-label { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); white-space: nowrap; font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mist); background: rgba(8,11,20,0.78); padding: 3px 9px; border-radius: 4px; opacity: 0; pointer-events: none; transition: opacity .25s; }
+  .dot-nav .dot:hover .dot-label { opacity: 1; }
+  @media (max-width: 768px) { .dot-nav { display: none; } }
 
   /* ── STARFIELD (page-wide top) ── */
   .sky {
@@ -298,10 +319,19 @@
   </div>
 </nav>
 
+<!-- ── DOT-NAV PAGER ── -->
+<nav class="dot-nav" aria-label="Section navigation">
+  <a href="#heavens" class="dot active" data-target="heavens" aria-label="The Heavens"><span class="dot-label">Heavens</span></a>
+  <a href="#constellation" class="dot" data-target="constellation" aria-label="The Constellation"><span class="dot-label">Constellation</span></a>
+  <a href="#pantheon" class="dot" data-target="pantheon" aria-label="The Pantheon"><span class="dot-label">Pantheon</span></a>
+  <a href="#stadium" class="dot" data-target="stadium" aria-label="The Stadium"><span class="dot-label">Stadium</span></a>
+  <a href="#lore" class="dot" data-target="lore" aria-label="The Lore"><span class="dot-label">Lore</span></a>
+</nav>
+
 <div id="top" class="sky">
 
   <!-- ── HERO / THE HEAVENS ── -->
-  <header class="hero">
+  <header id="heavens" class="hero">
     <div class="starlayer" id="heroStars" aria-hidden="true"></div>
 
     <!-- Antikythera-inspired orrery -->
@@ -631,6 +661,23 @@
       svg += `<line class="tick" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;
     }
     g.innerHTML = svg;
+  })();
+
+  // ── Dot-nav pager: track the active stage ──
+  (function(){
+    const dots = {};
+    document.querySelectorAll('.dot-nav .dot').forEach(d => { dots[d.dataset.target] = d; });
+    const targets = Object.keys(dots).map(id => document.getElementById(id)).filter(Boolean);
+    if (!('IntersectionObserver' in window) || !targets.length) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && dots[e.target.id]) {
+          Object.values(dots).forEach(d => d.classList.remove('active'));
+          dots[e.target.id].classList.add('active');
+        }
+      });
+    }, { threshold: 0.5 });
+    targets.forEach(t => io.observe(t));
   })();
 
   // ── Shrine modal ──
