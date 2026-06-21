@@ -6,9 +6,36 @@
 <title>Helikos Labs — a pantheon of AI-native apps</title>
 <meta name="description" content="Helikos Labs builds small, AI-native apps named for the Greek gods and Muses — utilities in the heavens, games in the stadium. A growing pantheon on Mount Helicon." />
 <meta name="theme-color" content="#0a0e1a" />
-<meta property="og:title" content="Helikos Labs" />
-<meta property="og:description" content="A growing pantheon of AI-native apps, named for the Muses of Mount Helicon." />
+<meta name="color-scheme" content="dark" />
+<meta name="author" content="Helikos Labs" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://www.helikos.dev/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080b14'/%3E%3Ccircle cx='32' cy='19' r='6' fill='%23c9a227'/%3E%3Cpath d='M6 52 L26 26 L38 40 L46 30 L58 52 Z' fill='none' stroke='%23c9a227' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<meta property="og:site_name" content="Helikos Labs" />
+<meta property="og:title" content="Helikos Labs — As Above, So Below" />
+<meta property="og:description" content="A growing pantheon of AI-native apps, named for the Greek gods and Muses of Mount Helicon — utilities in the heavens, games in the stadium." />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.helikos.dev/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content="https://www.helikos.dev/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Helikos Labs — a star above a mountain on a midnight sky" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Helikos Labs — As Above, So Below" />
+<meta name="twitter:description" content="A growing pantheon of AI-native apps, named for the Greek gods and Muses of Mount Helicon." />
+<meta name="twitter:image" content="https://www.helikos.dev/og-image.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Helikos Labs",
+  "url": "https://www.helikos.dev/",
+  "logo": "https://www.helikos.dev/og-image.png",
+  "description": "Helikos Labs builds small, AI-native apps named for the Greek gods and Muses of Mount Helicon — utilities in the heavens, games in the stadium.",
+  "sameAs": ["https://github.com/helikos-labs"]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -287,8 +314,24 @@
   .shrine-close { position: absolute; top: 14px; right: 16px; width: 34px; height: 34px; border: 1px solid rgba(201,162,39,0.25); background: transparent; color: var(--brass); border-radius: 50%; font-size: 20px; cursor: pointer; transition: all .25s; line-height: 1; }
   .shrine-close:hover { transform: rotate(90deg); border-color: var(--brass); color: var(--brass-light); }
 
+  /* ── Scroll-reveal — gentle rise as each stage enters view ── */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ── Visible keyboard focus for interactive elements (stars keep their halo) ── */
+  a:focus-visible, .column:focus-visible, .niche:focus-visible, .dot:focus-visible,
+  .shrine-close:focus-visible, .arena-close:focus-visible {
+    outline: 2px solid var(--brass-light);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ── Pipeline teaser ── */
+  .lore .forge { font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--brass-deep); margin-top: 26px; }
+
   @media (prefers-reduced-motion: reduce) {
     .spin, .spin-rev, .spin-slow, .twinkle, .twinkle-star, .scrollcue .arrow, .flame { animation: none !important; }
+    .reveal { opacity: 1; transform: none; transition: none; }
   }
   @media (max-width: 640px){
     body { font-size: 17px; }
@@ -376,7 +419,7 @@
   <!-- ── CONSTELLATION / THE APPS ── -->
   <section id="constellation" class="section constellation">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head reveal">
         <span class="eyebrow">The Heavens</span>
         <h2>Gods in the Stars</h2>
         <p>The deity apps — the lab's tools — burn as a constellation overhead. Hover to wake one, choose it to enter its shrine. The dim stars are gods not yet born; the sky fills as the lab builds.</p>
@@ -449,13 +492,13 @@
 <!-- ── PANTHEON / THE APPS GROUNDED ── -->
 <section id="pantheon" class="pantheon section" style="padding-top:80px;">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <span class="eyebrow">The Pantheon</span>
       <h2>Shrines of the Gods</h2>
       <p>The gods made solid — each built deity raised as a column. Enter a shrine to learn its craft, and note the sleeping ones, waiting for the lab to wake them.</p>
     </div>
 
-    <div class="colonnade">
+    <div class="colonnade reveal">
       <div class="column" data-app="athena" tabindex="0" role="button" aria-label="Enter Athena">
         <div class="col-cap"></div>
         <div class="col-shaft"><span class="col-glyph">Α</span></div>
@@ -498,13 +541,13 @@
   </svg>
 
   <div class="wrap" style="position:relative; z-index:2;">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <span class="eyebrow">The Stadium</span>
       <h2>Games in the Arena</h2>
       <p>At the foot of Helicon, in torchlight, the games are held in the gods' honour. Enter a niche to meet its contender — and mind the dark alcoves, awaiting challengers.</p>
     </div>
 
-    <div class="niches">
+    <div class="niches reveal">
       <div class="niche" data-game="pianoquest" tabindex="0" role="button" aria-label="Enter PianoQuest">
         <div class="brazier"><span class="flame"></span></div>
         <div class="niche-glyph">♪</div>
@@ -541,6 +584,7 @@
     <div class="scroll-rule"></div>
     <p>Helikos is Mount Helicon — in Greek myth the home of the Muses and the spring of all inspiration, struck from the rock by the hoof of Pegasus.</p>
     <p class="plain">Helikos Labs builds small, AI-native apps in that spirit. The gods keep the heavens — tools named for the deity whose craft they share — while the games are held below, in the stadium, in their honour. One sharp idea at a time, each kept live in the open.</p>
+    <p class="forge reveal">More gods are waking, and new games are being called — the pantheon is still being written.</p>
     <p class="antikythera">The first computer was Greek. So is this lab.</p>
   </div>
 </section>
@@ -678,6 +722,23 @@
       });
     }, { threshold: 0.5 });
     targets.forEach(t => io.observe(t));
+  })();
+
+  // ── Scroll-reveal: add .in as each .reveal enters view ──
+  (function(){
+    const items = document.querySelectorAll('.reveal');
+    if (!items.length) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) {
+      items.forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    items.forEach(el => io.observe(el));
   })();
 
   // ── Shrine modal ──

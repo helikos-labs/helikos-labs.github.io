@@ -16,13 +16,19 @@ to preview; push to the default branch to deploy.
 
 ```
 .
-├── index.html      # The entire landing page (HTML + Tailwind via CDN)
-├── CLAUDE.md       # This file
-└── .github/        # GitHub Pages / workflow config
+├── index.html          # The entire landing page (inline CSS/JS, no build)
+├── og-image.png        # 1200×630 social-share image (generated, not hand-edited)
+├── scripts/gen-og.mjs  # Build-time generator for og-image.png (Node built-ins only)
+├── CLAUDE.md           # This file
+├── CNAME               # Custom domain (www.helikos.dev)
+└── .github/            # GitHub Pages / workflow config
 ```
 
 Keep the site a single self-contained `index.html` unless there's a strong
-reason to add assets. No npm, no bundler, no framework.
+reason to add assets. No npm, no bundler, no framework. The one binary asset is
+`og-image.png` (link-preview image); regenerate it with `node scripts/gen-og.mjs`
+rather than editing the PNG by hand — the generator is dependency-free (Node's
+`zlib` only) and does not run at deploy time, so the site stays build-less.
 
 ## Tech & conventions
 
@@ -73,6 +79,18 @@ All styling/JS is **inline** in `index.html` — no Tailwind, no build, no `pack
   in-place overlays, so each stage behaves SPA-like once parked.
 - **Self-contained:** CSS/JS inline; only Google Fonts load remotely; SVG art is
   hand-rolled (no icon CDN), so the page degrades gracefully.
+- **Head / SEO / sharing:** `<head>` carries canonical, full OpenGraph + Twitter
+  `summary_large_image` tags (pointing at `og-image.png`), a JSON-LD
+  `Organization` block, `color-scheme: dark`, and an **inline SVG favicon**
+  (the mountain+star sigil as a `data:` URI — no file). Keep these in sync with
+  the live domain `https://www.helikos.dev/`.
+- **Scroll-reveal:** elements with `.reveal` fade/rise via `.in`, toggled by an
+  IntersectionObserver; applied to each `.sec-head`, the `.colonnade`, `.niches`,
+  and the lore teaser. Neutralized under `prefers-reduced-motion` (shown at once)
+  and when IO is unavailable. A `.forge` "pipeline teaser" line in **Lore** hints
+  at unbuilt apps without naming specifics.
+- **Focus:** a shared `:focus-visible` rule gives columns/niches/dots/links a
+  brass outline; stars keep their custom halo focus state.
 
 ## The Helikos naming theme
 
