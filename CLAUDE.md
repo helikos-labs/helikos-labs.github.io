@@ -40,31 +40,40 @@ All styling/JS is **inline** in `index.html` — no Tailwind, no build, no `pack
 - **Typography:** `Cinzel` (inscriptional caps) for the wordmark, section titles,
   and app names; `Cormorant Garamond` for serif body/taglines (italic for lede);
   `JetBrains Mono` for small uppercase labels. Loaded from Google Fonts.
+- **Two realms — "As Above, So Below":** the site splits apps into **gods**
+  (utilities, in the heavens) and **games** (in the stadium below).
 - **Structure (top → bottom):** fixed nav with a mountain+star **sigil**; HERO
   "the Heavens" (generated starfield + a rotating SVG **orrery** = Antikythera
-  motif); **Constellation** section where each app is an interactive `.star` in an
-  SVG starmap (plus dim `.future-star`s for unbuilt apps); a `.mountband` Mount
-  Helicon silhouette with light rays + dawn glow; **Pantheon** `.colonnade` of
-  `.column` shrines (one per app + a `.future` "Asleep" column); a **Lore**
-  section; footer. Both stars and columns carry `data-app` and open the same
-  **shrine modal** (`#shrine`), populated from the `APPS` object in JS.
-- **Adding an app:** add an entry to the `APPS` object, a `<g class="star"
-  data-app="…">` in the starmap, and a `.column` in the colonnade. Convert a
-  `.future` star/column into a real one as the lab grows.
-- **Responsiveness:** fluid `clamp()` type; colonnade is `auto-fit minmax(180px,1fr)`;
-  nav links hide under `640px`.
-- **Accessibility:** stars/columns are focusable (`tabindex`, `role="button"`),
-  Escape closes the modal, `prefers-reduced-motion` disables the orrery/twinkle.
+  motif); **Constellation** ("Gods in the Stars") where each *god* app is an
+  interactive `.star` in an SVG starmap (plus dim `.future-star`s); a `.mountband`
+  Mount Helicon silhouette with rays + dawn glow; **Pantheon** `.colonnade` of
+  `.column` shrines (the built gods + a `.future` "Asleep" column); **Stadium**
+  ("Games in the Arena") — a torchlit amphitheater (`.theatron` SVG) of `.niche`
+  alcoves with flickering `.brazier`/`.flame`, one per *game* + an `.empty` lane;
+  a **Lore** section; footer.
+- **Two modals:** gods (stars + columns, `data-app`) open the brass **shrine
+  modal** (`#shrine`) from the `APPS` object; games (niches, `data-game`) open the
+  torchlit **arena modal** (`#arena`) from the `GAMES` object. Games without a live
+  URL (`live: null`) show a status pill instead of an "Enter the Arena" button.
+- **Adding a god:** add to `APPS`, a `<g class="star" data-app="…">` in the
+  starmap, and a `.column` in the colonnade. **Adding a game:** add to `GAMES` and
+  a `.niche` (with `data-game`) in `.niches`. Convert a `.future`/`.empty`
+  placeholder into a real one as the lab grows.
+- **Responsiveness:** fluid `clamp()` type; colonnade & niches are
+  `auto-fit minmax(~180px,1fr)`; nav links hide under `640px`.
+- **Accessibility:** stars/columns/niches are focusable (`tabindex`,
+  `role="button"`), Escape closes either modal, `prefers-reduced-motion` disables
+  the orrery/twinkle/flame.
 - **Self-contained:** CSS/JS inline; only Google Fonts load remotely; SVG art is
   hand-rolled (no icon CDN), so the page degrades gracefully.
 
 ## The Helikos naming theme
 
 Helikos (Mount Helicon, home of the Muses) — apps are named after Greek
-deities and Muses. When adding an app, follow the convention: a mythic name, the
-deity's **domain/role** (e.g. "Muse of History"), a one-line "what it does," a
-status, and an `Enter <App> →` link to `https://<name>.helikos.dev`. Apps appear
-twice — as a star in the constellation and as a shrine column in the pantheon.
+deities and Muses. **Gods** (utilities) live in the heavens/pantheon with a
+**domain/role** (e.g. "Muse of History") and an `Enter <App> →` shrine link.
+**Games** live in the stadium with a **contest** name (e.g. "The Pythian Contest")
+and an `Enter the Arena →` link. Both follow `https://<name>.helikos.dev`.
 
 ## The apps (portfolio)
 
@@ -74,17 +83,25 @@ twice — as a star in the constellation and as a shrine column in the pantheon.
 > canonical marketing copy — update them in lockstep with `index.html`. Apps are
 > hosted on **Cloudflare Pages** (`*.pages.dev`) and served at `*.helikos.dev`.
 
-| App         | Subdomain                | What it is                                                                                  | Status         |
-|-------------|--------------------------|---------------------------------------------------------------------------------------------|----------------|
-| Athena      | athena.helikos.dev       | AI Creative Studio — build worlds, write novels, generate comics; photoreal writing "Study" | Proof of Concept |
-| Kleio       | kleio.helikos.dev        | Precision browser transcription; static frontend + serverless speech-to-text (Whisper/Cloud Run) | Proof of Concept |
-| Mnemosyne   | mnemosyne.helikos.dev    | 3D knowledge galaxy — a personal "second brain" as a navigable Three.js universe of notes   | In Development |
-| PianoQuest  | pianoquest.helikos.dev   | RPG-style game that turns piano practice into a quest across five worlds                     | Proof of Concept |
+**Gods (the heavens / pantheon):**
 
-Status badges used on the page: `PoC`, `In Development`, `Experimental`.
+| God        | Subdomain                | What it is                                                                                  | Status         |
+|------------|--------------------------|---------------------------------------------------------------------------------------------|----------------|
+| Athena     | athena.helikos.dev       | AI Creative Studio — build worlds, write novels, generate comics; photoreal writing "Study" | Proof of Concept |
+| Kleio      | kleio.helikos.dev        | Precision browser transcription; static frontend + serverless speech-to-text (Whisper/Cloud Run) | Proof of Concept |
+| Mnemosyne  | mnemosyne.helikos.dev    | 3D knowledge galaxy — a personal "second brain" as a navigable Three.js universe of notes   | In Development |
 
-**Not yet on the page:** `kybos.helikos.dev` (`kybos` repo) exists in DNS but its
-repo had no readable content at last check — add a card once it has real copy.
+**Games (the stadium):**
+
+| Game       | Subdomain                | What it is                                                                  | Status (label)         |
+|------------|--------------------------|----------------------------------------------------------------------------|------------------------|
+| PianoQuest | pianoquest.helikos.dev   | RPG that turns piano practice into a quest across five worlds (Pythian)     | Live — "Now competing" |
+| Bitthrone  | (not deployed)           | Mobile-first portrait top-down 2D MOBA brawler (Phaser 3)                   | "In training" — no live URL |
+| Kybos      | kybos.helikos.dev        | κύβος = die; a game of fortune (Tyche). Repo not yet readable              | "Awaiting the games" — reserved |
+
+Status badges used on the page: gods use `Proof of Concept`/`In Development`;
+games use flavor labels (`Now competing`/`In training`/`Awaiting the games`).
+Games with `live: null` render a status pill instead of a launch button.
 
 ## Editing the landing page
 

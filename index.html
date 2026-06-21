@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Helikos Labs — a pantheon of AI-native apps</title>
-<meta name="description" content="Helikos Labs builds small, AI-native apps named for the Muses of Mount Helicon. A growing constellation: Athena, Kleio, Mnemosyne, PianoQuest — and more rising." />
+<meta name="description" content="Helikos Labs builds small, AI-native apps named for the Greek gods and Muses — utilities in the heavens, games in the stadium. A growing pantheon on Mount Helicon." />
 <meta name="theme-color" content="#0a0e1a" />
 <meta property="og:title" content="Helikos Labs" />
 <meta property="og:description" content="A growing pantheon of AI-native apps, named for the Muses of Mount Helicon." />
@@ -28,6 +28,12 @@
     --brass-deep: #8a6d1c;
     --aegean: #5fb6c9;
     --line: rgba(201,162,39,0.22);
+    --marble: #e3d8c3;
+    --marble-dim: #c4b59b;
+    --terracotta: #b5532e;
+    --olive: #8a9a52;
+    --flame: #ffb347;
+    --flame-hot: #ff7a18;
     --display: 'Cinzel', serif;
     --serif: 'Cormorant Garamond', Georgia, serif;
     --mono: 'JetBrains Mono', monospace;
@@ -175,6 +181,64 @@
   .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; color: var(--mist-dim); }
   .foot a:hover { color: var(--brass-light); }
 
+  /* ── STADIUM (the games) ── */
+  .stadium { position: relative; overflow: hidden; background: linear-gradient(to bottom, var(--void) 0%, #1d1410 28%, #271811 68%, var(--void) 100%); }
+  .stadium-glow { position: absolute; left: 50%; bottom: -30px; transform: translateX(-50%); width: 92%; height: 70%; background: radial-gradient(ellipse at center bottom, rgba(255,140,50,0.16), transparent 65%); pointer-events: none; }
+  .theatron { position: absolute; left: 0; right: 0; bottom: -8px; width: 100%; height: 72%; opacity: .9; pointer-events: none; }
+  .niches { display: grid; grid-template-columns: repeat(auto-fit, minmax(178px, 1fr)); gap: 18px; margin-top: 54px; }
+  .niche {
+    position: relative; text-align: center; cursor: pointer;
+    background: linear-gradient(to bottom, rgba(227,216,195,0.10), rgba(180,83,46,0.05));
+    border: 1px solid rgba(227,216,195,0.18);
+    border-radius: 120px 120px 10px 10px; padding: 56px 18px 26px;
+    transition: transform .3s, box-shadow .3s, border-color .3s, background .3s;
+  }
+  .niche.empty { cursor: default; opacity: .4; border-style: dashed; background: none; padding-top: 40px; }
+  .niche:not(.empty):hover { transform: translateY(-6px); border-color: rgba(255,160,70,0.5); box-shadow: 0 0 54px -12px rgba(255,140,50,0.45); background: linear-gradient(to bottom, rgba(255,180,90,0.13), rgba(180,83,46,0.07)); }
+  .brazier { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); width: 26px; height: 14px; background: linear-gradient(var(--terracotta), #5c2c14); border-radius: 3px 3px 6px 6px; }
+  .flame { position: absolute; top: -19px; left: 50%; width: 13px; height: 22px; border-radius: 50% 50% 50% 50% / 62% 62% 40% 40%; background: radial-gradient(circle at 50% 75%, #fff1c2, var(--flame) 45%, var(--flame-hot) 80%, transparent); box-shadow: 0 0 16px 4px rgba(255,140,50,0.55); transform-origin: 50% 100%; animation: flicker 1.7s ease-in-out infinite; }
+  .flame.dim { opacity: .45; box-shadow: 0 0 9px 2px rgba(255,140,50,0.3); }
+  @keyframes flicker {
+    0%,100% { transform: translateX(-50%) scaleY(1) skewX(0deg); opacity: .95; }
+    25% { transform: translateX(-54%) scaleY(1.14) skewX(-4deg); opacity: 1; }
+    50% { transform: translateX(-46%) scaleY(.9) skewX(3deg); opacity: .82; }
+    75% { transform: translateX(-52%) scaleY(1.07) skewX(-2deg); opacity: 1; }
+  }
+  .niche-glyph { font-family: var(--display); font-size: 34px; font-weight: 700; color: var(--flame); line-height: 1; text-shadow: 0 0 20px rgba(255,140,50,0.45); }
+  .niche.empty .niche-glyph { color: var(--mist-dim); text-shadow: none; font-size: 26px; }
+  .niche-name { font-family: var(--display); font-size: 19px; letter-spacing: 2px; color: var(--star); margin-top: 14px; }
+  .niche.empty .niche-name { color: var(--mist-dim); }
+  .niche-contest { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--marble-dim); margin-top: 2px; }
+  .niche-status { font-family: var(--mono); font-size: 9px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--mist-dim); margin-top: 12px; }
+  .niche-status.live { color: var(--flame); }
+
+  /* ── ARENA MODAL (contest card) ── */
+  #arena { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 22px; }
+  #arena.open { display: flex; }
+  .arena-veil { position: absolute; inset: 0; background: rgba(20,8,4,0.72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity .4s; }
+  #arena.open .arena-veil { opacity: 1; }
+  .arena-card {
+    position: relative; z-index: 2; width: 100%; max-width: 540px;
+    background: linear-gradient(165deg, #271811, #140d09);
+    border: 1px solid rgba(255,160,70,0.35); border-radius: 14px; padding: 38px 40px 36px;
+    text-align: center; transform: translateY(16px) scale(.97); opacity: 0;
+    transition: transform .45s cubic-bezier(.16,1,.3,1), opacity .4s;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.8), 0 0 70px -24px rgba(255,140,50,0.45);
+  }
+  #arena.open .arena-card { transform: translateY(0) scale(1); opacity: 1; }
+  .laurel { width: 130px; height: 26px; margin: 0 auto 4px; color: var(--olive); display: block; }
+  .arena-glyph { font-family: var(--display); font-size: 56px; font-weight: 700; color: var(--flame); line-height: 1; text-shadow: 0 0 26px rgba(255,140,50,0.5); }
+  .arena-contest { font-family: var(--mono); font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--flame); margin-top: 12px; }
+  .arena-name { font-family: var(--display); font-size: 36px; letter-spacing: 2px; color: var(--star); margin-top: 6px; }
+  .arena-type { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--marble-dim); margin-top: 4px; }
+  .arena-desc { font-size: 17px; color: var(--mist); margin-top: 18px; line-height: 1.65; }
+  .arena-actions { margin-top: 26px; display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .btn-arena { font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #1a0f08; background: var(--flame); padding: 13px 26px; border-radius: 6px; transition: background .2s, transform .2s; }
+  .btn-arena:hover { background: #ffca73; transform: translateY(-1px); }
+  .arena-soon { font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--marble-dim); border: 1px dashed rgba(227,216,195,0.3); padding: 12px 22px; border-radius: 6px; }
+  .arena-close { position: absolute; top: 14px; right: 16px; width: 34px; height: 34px; border: 1px solid rgba(255,160,70,0.3); background: transparent; color: var(--flame); border-radius: 50%; font-size: 20px; cursor: pointer; transition: all .25s; line-height: 1; }
+  .arena-close:hover { transform: rotate(90deg); border-color: var(--flame); }
+
   /* ── MODAL (the Shrine) ── */
   #shrine { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 22px; }
   #shrine.open { display: flex; }
@@ -203,7 +267,7 @@
   .shrine-close:hover { transform: rotate(90deg); border-color: var(--brass); color: var(--brass-light); }
 
   @media (prefers-reduced-motion: reduce) {
-    .spin, .spin-rev, .spin-slow, .twinkle, .twinkle-star, .scrollcue .arrow { animation: none !important; }
+    .spin, .spin-rev, .spin-slow, .twinkle, .twinkle-star, .scrollcue .arrow, .flame { animation: none !important; }
   }
   @media (max-width: 640px){
     body { font-size: 17px; }
@@ -228,7 +292,8 @@
     <div class="nav-links">
       <a href="#constellation">Constellation</a>
       <a href="#pantheon">Pantheon</a>
-      <a href="#lore">The Mountain</a>
+      <a href="#stadium">Stadium</a>
+      <a href="#lore">Lore</a>
     </div>
   </div>
 </nav>
@@ -282,64 +347,54 @@
   <section id="constellation" class="section constellation">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">The Constellation</span>
-        <h2>Apps as Stars</h2>
-        <p>Each light is a living app. Hover to wake it, choose one to enter its shrine. The dim stars are not yet born — the sky fills as the lab builds.</p>
+        <span class="eyebrow">The Heavens</span>
+        <h2>Gods in the Stars</h2>
+        <p>The deity apps — the lab's tools — burn as a constellation overhead. Hover to wake one, choose it to enter its shrine. The dim stars are gods not yet born; the sky fills as the lab builds.</p>
       </div>
 
-      <svg class="starmap" viewBox="0 0 1000 440" role="group" aria-label="Constellation of Helikos apps">
+      <svg class="starmap" viewBox="0 0 1000 320" role="group" aria-label="Constellation of Helikos god apps">
         <!-- constellation links -->
-        <line class="cline" x1="215" y1="150" x2="430" y2="95"/>
-        <line class="cline" x1="430" y1="95" x2="640" y2="185"/>
-        <line class="cline" x1="640" y1="185" x2="815" y2="110"/>
-        <line class="cline" x1="215" y1="150" x2="640" y2="185"/>
+        <line class="cline" x1="260" y1="160" x2="510" y2="100"/>
+        <line class="cline" x1="510" y1="100" x2="740" y2="180"/>
+        <line class="cline" x1="260" y1="160" x2="740" y2="180"/>
 
         <!-- ambient + future stars -->
-        <circle class="twinkle-star" cx="120" cy="300" r="1.6"/>
-        <circle class="twinkle-star" cx="540" cy="320" r="1.4" style="animation-delay:1.5s"/>
-        <circle class="twinkle-star" cx="900" cy="250" r="1.8" style="animation-delay:.8s"/>
-        <circle class="twinkle-star" cx="320" cy="370" r="1.3" style="animation-delay:2.1s"/>
-        <circle class="twinkle-star" cx="720" cy="60" r="1.5" style="animation-delay:1.1s"/>
-        <circle class="future-star" cx="430" cy="300" r="3"/>
-        <circle class="future-star" cx="560" cy="120" r="2.5"/>
-        <circle class="future-star" cx="180" cy="240" r="2.5"/>
-        <circle class="future-star" cx="860" cy="330" r="3"/>
+        <circle class="twinkle-star" cx="120" cy="240" r="1.6"/>
+        <circle class="twinkle-star" cx="600" cy="250" r="1.4" style="animation-delay:1.5s"/>
+        <circle class="twinkle-star" cx="900" cy="90" r="1.8" style="animation-delay:.8s"/>
+        <circle class="twinkle-star" cx="360" cy="60" r="1.3" style="animation-delay:2.1s"/>
+        <circle class="twinkle-star" cx="820" cy="250" r="1.5" style="animation-delay:1.1s"/>
+        <circle class="future-star" cx="430" cy="250" r="3"/>
+        <circle class="future-star" cx="640" cy="70" r="2.5"/>
+        <circle class="future-star" cx="170" cy="120" r="2.5"/>
+        <circle class="future-star" cx="880" cy="190" r="3"/>
 
         <!-- Athena -->
         <g class="star" data-app="athena" tabindex="0" role="button" aria-label="Athena — AI Creative Studio">
-          <circle class="halo" cx="215" cy="150" r="34"/>
-          <circle class="ring2" cx="215" cy="150" r="20"/>
-          <circle class="core" cx="215" cy="150" r="13"/>
-          <text class="glyph" x="215" y="150">Α</text>
-          <text class="label" x="215" y="196">ATHENA</text>
-          <text class="role" x="215" y="212">Creative Studio</text>
+          <circle class="halo" cx="260" cy="160" r="34"/>
+          <circle class="ring2" cx="260" cy="160" r="20"/>
+          <circle class="core" cx="260" cy="160" r="13"/>
+          <text class="glyph" x="260" y="160">Α</text>
+          <text class="label" x="260" y="206">ATHENA</text>
+          <text class="role" x="260" y="222">Creative Studio</text>
         </g>
         <!-- Kleio -->
         <g class="star" data-app="kleio" tabindex="0" role="button" aria-label="Kleio — Transcription">
-          <circle class="halo" cx="430" cy="95" r="32"/>
-          <circle class="ring2" cx="430" cy="95" r="18"/>
-          <circle class="core" cx="430" cy="95" r="11"/>
-          <text class="glyph" x="430" y="95">Κ</text>
-          <text class="label" x="430" y="139">KLEIO</text>
-          <text class="role" x="430" y="155">Transcription</text>
+          <circle class="halo" cx="510" cy="100" r="32"/>
+          <circle class="ring2" cx="510" cy="100" r="18"/>
+          <circle class="core" cx="510" cy="100" r="11"/>
+          <text class="glyph" x="510" y="100">Κ</text>
+          <text class="label" x="510" y="144">KLEIO</text>
+          <text class="role" x="510" y="160">Transcription</text>
         </g>
         <!-- Mnemosyne -->
         <g class="star" data-app="mnemosyne" tabindex="0" role="button" aria-label="Mnemosyne — 3D Knowledge Galaxy">
-          <circle class="halo" cx="640" cy="185" r="36"/>
-          <circle class="ring2" cx="640" cy="185" r="22"/>
-          <circle class="core" cx="640" cy="185" r="14"/>
-          <text class="glyph" x="640" y="185">Μ</text>
-          <text class="label" x="640" y="233">MNEMOSYNE</text>
-          <text class="role" x="640" y="249">Knowledge Galaxy</text>
-        </g>
-        <!-- PianoQuest -->
-        <g class="star" data-app="pianoquest" tabindex="0" role="button" aria-label="PianoQuest — Music Quest">
-          <circle class="halo" cx="815" cy="110" r="32"/>
-          <circle class="ring2" cx="815" cy="110" r="18"/>
-          <circle class="core" cx="815" cy="110" r="11"/>
-          <text class="glyph" x="815" y="112">♪</text>
-          <text class="label" x="815" y="154">PIANOQUEST</text>
-          <text class="role" x="815" y="170">Music Quest</text>
+          <circle class="halo" cx="740" cy="180" r="36"/>
+          <circle class="ring2" cx="740" cy="180" r="22"/>
+          <circle class="core" cx="740" cy="180" r="14"/>
+          <text class="glyph" x="740" y="180">Μ</text>
+          <text class="label" x="740" y="228">MNEMOSYNE</text>
+          <text class="role" x="740" y="244">Knowledge Galaxy</text>
         </g>
       </svg>
     </div>
@@ -366,8 +421,8 @@
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">The Pantheon</span>
-      <h2>Shrines at the Foot of Helicon</h2>
-      <p>Every star casts a column. Enter a shrine to learn its craft — and note the sleeping ones, waiting for the lab to wake them.</p>
+      <h2>Shrines of the Gods</h2>
+      <p>The gods made solid — each built deity raised as a column. Enter a shrine to learn its craft, and note the sleeping ones, waiting for the lab to wake them.</p>
     </div>
 
     <div class="colonnade">
@@ -389,12 +444,6 @@
         <div class="col-base"></div>
         <div class="col-meta"><div class="col-name">Mnemosyne</div><div class="col-role">Memory</div></div>
       </div>
-      <div class="column" data-app="pianoquest" tabindex="0" role="button" aria-label="Enter PianoQuest">
-        <div class="col-cap"></div>
-        <div class="col-shaft"><span class="col-glyph">♪</span></div>
-        <div class="col-base"></div>
-        <div class="col-meta"><div class="col-name">PianoQuest</div><div class="col-role">Music &amp; Play</div></div>
-      </div>
       <div class="column future" aria-hidden="true">
         <div class="col-cap"></div>
         <div class="col-shaft"><span class="col-glyph">·</span></div>
@@ -405,12 +454,63 @@
   </div>
 </section>
 
+<!-- ── STADIUM / THE GAMES ── -->
+<section id="stadium" class="stadium section">
+  <div class="stadium-glow" aria-hidden="true"></div>
+  <svg class="theatron" viewBox="0 0 1000 360" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g fill="none" stroke="rgba(227,216,195,0.10)" stroke-width="2">
+      <ellipse cx="500" cy="440" rx="540" ry="310"/>
+      <ellipse cx="500" cy="440" rx="452" ry="260"/>
+      <ellipse cx="500" cy="440" rx="364" ry="210"/>
+      <ellipse cx="500" cy="440" rx="276" ry="160"/>
+    </g>
+    <ellipse cx="500" cy="440" rx="210" ry="118" fill="rgba(207,154,82,0.06)" stroke="rgba(227,216,195,0.12)"/>
+  </svg>
+
+  <div class="wrap" style="position:relative; z-index:2;">
+    <div class="sec-head">
+      <span class="eyebrow">The Stadium</span>
+      <h2>Games in the Arena</h2>
+      <p>At the foot of Helicon, in torchlight, the games are held in the gods' honour. Enter a niche to meet its contender — and mind the dark alcoves, awaiting challengers.</p>
+    </div>
+
+    <div class="niches">
+      <div class="niche" data-game="pianoquest" tabindex="0" role="button" aria-label="Enter PianoQuest">
+        <div class="brazier"><span class="flame"></span></div>
+        <div class="niche-glyph">♪</div>
+        <div class="niche-name">PianoQuest</div>
+        <div class="niche-contest">The Pythian Contest</div>
+        <div class="niche-status live">Now competing</div>
+      </div>
+      <div class="niche" data-game="bitthrone" tabindex="0" role="button" aria-label="View Bitthrone">
+        <div class="brazier"><span class="flame"></span></div>
+        <div class="niche-glyph">Β</div>
+        <div class="niche-name">Bitthrone</div>
+        <div class="niche-contest">The Combat Agon</div>
+        <div class="niche-status">In training</div>
+      </div>
+      <div class="niche" data-game="kybos" tabindex="0" role="button" aria-label="View Kybos">
+        <div class="brazier"><span class="flame dim"></span></div>
+        <div class="niche-glyph">Κ</div>
+        <div class="niche-name">Kybos</div>
+        <div class="niche-contest">Games of Fortune</div>
+        <div class="niche-status">Awaiting the games</div>
+      </div>
+      <div class="niche empty" aria-hidden="true">
+        <div class="niche-glyph">·</div>
+        <div class="niche-name">Vacant lane</div>
+        <div class="niche-contest">A challenger may rise</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── LORE / THE MOUNTAIN ── -->
 <section id="lore" class="lore">
   <div class="wrap">
     <div class="scroll-rule"></div>
     <p>Helikos is Mount Helicon — in Greek myth the home of the Muses and the spring of all inspiration, struck from the rock by the hoof of Pegasus.</p>
-    <p class="plain">Helikos Labs builds small, AI-native apps in that spirit: one sharp idea at a time, each named for the deity whose domain it shares — wisdom, memory, history, music — and each kept live in the open.</p>
+    <p class="plain">Helikos Labs builds small, AI-native apps in that spirit. The gods keep the heavens — tools named for the deity whose craft they share — while the games are held below, in the stadium, in their honour. One sharp idea at a time, each kept live in the open.</p>
     <p class="antikythera">The first computer was Greek. So is this lab.</p>
   </div>
 </section>
@@ -421,6 +521,32 @@
     <span><a href="https://github.com/helikos-labs" target="_blank" rel="noopener">github.com/helikos-labs</a> &nbsp;·&nbsp; <a href="#top">Ascend ↑</a></span>
   </div>
 </footer>
+
+<!-- ── ARENA MODAL (contest card) ── -->
+<div id="arena" role="dialog" aria-modal="true" aria-labelledby="arena-name">
+  <div class="arena-veil"></div>
+  <div class="arena-card">
+    <button class="arena-close" aria-label="Close">×</button>
+    <svg class="laurel" viewBox="0 0 130 26" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+      <path d="M65 23 C 47 23 31 16 23 4"/>
+      <path d="M65 23 C 83 23 99 16 107 4"/>
+      <g fill="currentColor" stroke="none">
+        <ellipse cx="33" cy="13" rx="4" ry="2.4" transform="rotate(-32 33 13)"/>
+        <ellipse cx="44" cy="18" rx="4" ry="2.4" transform="rotate(-22 44 18)"/>
+        <ellipse cx="55" cy="21" rx="4" ry="2.4" transform="rotate(-12 55 21)"/>
+        <ellipse cx="97" cy="13" rx="4" ry="2.4" transform="rotate(32 97 13)"/>
+        <ellipse cx="86" cy="18" rx="4" ry="2.4" transform="rotate(22 86 18)"/>
+        <ellipse cx="75" cy="21" rx="4" ry="2.4" transform="rotate(12 75 21)"/>
+      </g>
+    </svg>
+    <div class="arena-glyph"></div>
+    <div class="arena-contest"></div>
+    <div class="arena-name" id="arena-name"></div>
+    <div class="arena-type"></div>
+    <p class="arena-desc"></p>
+    <div class="arena-actions"></div>
+  </div>
+</div>
 
 <!-- ── SHRINE MODAL ── -->
 <div id="shrine" role="dialog" aria-modal="true" aria-labelledby="shrine-name">
@@ -437,7 +563,7 @@
 </div>
 
 <script>
-  // ── App data (the pantheon) ──
+  // ── Gods (the heavens & the pantheon) ──
   const APPS = {
     athena: {
       glyph: 'Α', name: 'Athena', role: 'Goddess of Wisdom & Craft',
@@ -453,11 +579,25 @@
       glyph: 'Μ', name: 'Mnemosyne', role: 'Goddess of Memory',
       cat: '3D Knowledge Galaxy', status: 'In Development', live: 'https://mnemosyne.helikos.dev',
       desc: 'A personal second brain rendered as a navigable 3D galaxy — click a node and the universe assembles around it, your notes clustered by meaning and slowly orbiting.'
-    },
+    }
+  };
+
+  // ── Games (the stadium) ──
+  const GAMES = {
     pianoquest: {
-      glyph: '♪', name: 'PianoQuest', role: 'In the key of Euterpe',
-      cat: 'Music Quest', status: 'Proof of Concept', live: 'https://pianoquest.helikos.dev',
+      glyph: '♪', name: 'PianoQuest', contest: 'The Pythian Contest',
+      type: 'Music · RPG', status: 'Now competing', live: 'https://pianoquest.helikos.dev',
       desc: 'An RPG that turns piano practice into a themed adventure — pick from five worlds, defeat enemies by completing songs, and collect gear across a procedurally built quest map.'
+    },
+    bitthrone: {
+      glyph: 'Β', name: 'Bitthrone', contest: 'The Combat Agon',
+      type: 'MOBA · 2D brawler', status: 'In training', live: null,
+      desc: 'A mobile-first, portrait, top-down 2D MOBA brawler built with Phaser 3 — fast arena combat in the palm of your hand. Its exhibition is forthcoming.'
+    },
+    kybos: {
+      glyph: 'Κ', name: 'Kybos', contest: 'Games of Fortune',
+      type: 'Dice · chance', status: 'Awaiting the games', live: null,
+      desc: 'κύβος — the die. A game of chance under the eye of Tyche. Its lane is reserved; the contest is yet to begin.'
     }
   };
 
@@ -533,7 +673,52 @@
   });
   shrine.querySelector('.shrine-close').addEventListener('click', closeShrine);
   shrine.querySelector('.shrine-veil').addEventListener('click', closeShrine);
-  window.addEventListener('keydown', e => { if (e.key === 'Escape' && shrine.classList.contains('open')) closeShrine(); });
+
+  // ── Arena modal (the contest card) ──
+  const arena = document.getElementById('arena');
+  const aGlyph = arena.querySelector('.arena-glyph');
+  const aContest = arena.querySelector('.arena-contest');
+  const aName = arena.querySelector('.arena-name');
+  const aType = arena.querySelector('.arena-type');
+  const aDesc = arena.querySelector('.arena-desc');
+  const aActions = arena.querySelector('.arena-actions');
+
+  function openArena(key){
+    const g = GAMES[key]; if (!g) return;
+    lastFocus = document.activeElement;
+    aGlyph.textContent = g.glyph;
+    aContest.textContent = g.contest;
+    aName.textContent = g.name;
+    aType.textContent = g.type;
+    aDesc.textContent = g.desc;
+    aActions.innerHTML = g.live
+      ? `<a class="btn-arena" href="${g.live}" target="_blank" rel="noopener">Enter the Arena →</a><span class="shrine-status">${g.status}</span>`
+      : `<span class="arena-soon">${g.status}</span>`;
+    arena.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    arena.querySelector('.arena-close').focus();
+  }
+  function closeArena(){
+    arena.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  document.querySelectorAll('[data-game]').forEach(el => {
+    const key = el.getAttribute('data-game');
+    el.addEventListener('click', () => openArena(key));
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openArena(key); }
+    });
+  });
+  arena.querySelector('.arena-close').addEventListener('click', closeArena);
+  arena.querySelector('.arena-veil').addEventListener('click', closeArena);
+
+  window.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (shrine.classList.contains('open')) closeShrine();
+    if (arena.classList.contains('open')) closeArena();
+  });
 </script>
 
 </body>
