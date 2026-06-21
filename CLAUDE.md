@@ -35,11 +35,11 @@ rather than editing the PNG by hand — the generator is dependency-free (Node's
 ## Tech & conventions
 
 The site keeps its **mythic identity** — "As Above, So Below" — themed on Mount
-Helicon (home of the Muses) and the **Antikythera mechanism** (the first computer
-was Greek), but expresses it through a **minimalist, typography-led** layout: lots
-of negative space, brass-on-midnight, and a clean card grid rather than ornate SVG
-scenery. All styling/JS is **inline** in `index.html` — no Tailwind, no build, no
-`package.json`.
+Helikon (home of the Muses) and *kosmos*, the ordered sky: stars, ideas, and
+deities. The name **Helikos** weds the two. It expresses this through a
+**minimalist, typography-led** layout: lots of negative space, brass-on-midnight,
+and a clean card grid rather than ornate SVG scenery. All styling/JS is **inline**
+in `index.html` — no Tailwind, no build, no `package.json`.
 
 - **Palette (CSS custom properties in `:root`):** deep midnight (`--void: #080b14`,
   `--night`, `--night-2`) rising to a `--horizon`/`--dawn` amber band behind the
@@ -56,14 +56,14 @@ scenery. All styling/JS is **inline** in `index.html` — no Tailwind, no build,
   + `HELIKOS LABS` wordmark and `Gods / Games / Lore` links; an **atmospheric but
   typographic hero** — a full-height "sky above, mountains below" scene (layered
   void→night→horizon gradient + brass/aegean radial glows, a JS-scattered
-  `.starlayer` twinkle field, a `.dawnglow` behind a two-range Mount Helicon
+  `.starlayer` twinkle field, a `.dawnglow` behind a two-range Mount Helikon
   `.mountains` SVG silhouette with a brass ridge) carrying the centred sigil mark,
   `HELIKOS` wordmark, tagline and lede; a **Gods** section (`#gods`) of `.card`s in
   a `.grid`; a hairline `.realm-rule` divider; a **Games** section (`#games`) of
   `.card`s; a **Lore** section; footer. No colonnade, theatron, braziers, modals,
   or dot-nav — those stay removed; the scenery lives only as hero backdrop.
 - **Cards:** each app is a self-contained `.card` (no modals, no JS data objects) —
-  glyph (Greek letter / `♪`), `.card-name`, `.card-role`, `.card-desc`, and a
+  glyph (an initial letterform / `♪`), `.card-name`, `.card-role`, `.card-desc`, and a
   `.card-foot` with an `Enter →` `.card-link` (live apps) plus a `.card-status`
   pill. Unbuilt apps use `.card.is-dormant` (dimmed glyph/role, no hover lift) and
   show only a status pill — no link. Live status pills get `.card-status.live`.
@@ -90,8 +90,8 @@ scenery. All styling/JS is **inline** in `index.html` — no Tailwind, no build,
 
 ## The Helikos naming theme
 
-Helikos (Mount Helicon, home of the Muses) — apps are named after Greek
-deities and Muses. **Gods** (utilities, "As Above") carry a short **role/category**
+Helikos (Mount Helikon + *kosmos*, the ordered sky) — apps are named after the
+deities and Muses of myth. **Gods** (utilities, "As Above") carry a short **role/category**
 (e.g. "Precision Transcription"); **Games** ("So Below") carry a **type**
 (e.g. "Music · RPG"). Both surface an `Enter →` link to `https://<name>.helikos.dev`
 when live. Keep the role/type lines terse.

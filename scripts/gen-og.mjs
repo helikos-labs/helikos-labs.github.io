@@ -50,7 +50,7 @@ for (let k = 0; k < 150; k++) {
   if (rand() > 0.85) { set(x + 1, y, 245, 240, 227, bri * 120); set(x, y + 1, 245, 240, 227, bri * 120); }
 }
 
-// ── Mount Helicon silhouette ──
+// ── Mount Helikon silhouette ──
 const base = 470;
 const mtop = (x) =>
   base - (150 * Math.exp(-(((x - 430) / 180) ** 2))
