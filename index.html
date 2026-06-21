@@ -9,6 +9,7 @@
 <meta name="color-scheme" content="dark" />
 <meta name="author" content="Helikos Labs" />
 <meta name="robots" content="index, follow" />
+<meta name="app-build" content="1" />
 <link rel="canonical" href="https://www.helikos.dev/" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080b14'/%3E%3Ccircle cx='32' cy='19' r='6' fill='%23c9a227'/%3E%3Cpath d='M6 52 L26 26 L38 40 L46 30 L58 52 Z' fill='none' stroke='%23c9a227' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
 <meta property="og:site_name" content="Helikos Labs" />
@@ -196,6 +197,21 @@
   a:focus-visible {
     outline: 2px solid var(--brass-light); outline-offset: 3px; border-radius: 4px;
   }
+
+  /* ── Update notice (new deploy detected) ── */
+  .update-bar {
+    position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 300;
+    display: flex; align-items: center; gap: 14px; max-width: calc(100vw - 32px);
+    background: var(--night-2); border: 1px solid var(--brass); border-radius: 10px;
+    padding: 12px 16px; font-family: var(--mono); font-size: 12px; letter-spacing: .5px;
+    color: var(--mist); box-shadow: 0 18px 50px -18px rgba(0,0,0,.8);
+  }
+  .update-btn {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--void); background: var(--brass); border: 0; padding: 9px 15px; border-radius: 6px; cursor: pointer;
+  }
+  .update-btn:hover { background: var(--brass-light); }
+  .update-btn:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 2px; }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -405,6 +421,53 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
     items.forEach(el => io.observe(el));
+  })();
+
+  // ── Version tracker: refresh when a newer build is deployed ──
+  // Compares the build baked into this page against the live version.json.
+  // If the tab is hidden we reload silently; if it's in view we offer an
+  // accessible "Refresh" prompt rather than yanking content out from under you.
+  (function(){
+    const meta = document.querySelector('meta[name="app-build"]');
+    if (!meta || !('fetch' in window)) return;
+    const current = parseInt(meta.content, 10) || 0;
+    let notified = false;
+
+    function notify(){
+      if (notified) return; notified = true;
+      const bar = document.createElement('div');
+      bar.className = 'update-bar';
+      bar.setAttribute('role', 'status');
+      bar.setAttribute('aria-live', 'polite');
+      const msg = document.createElement('span');
+      msg.textContent = 'A new version of this page is available.';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'update-btn';
+      btn.textContent = 'Refresh';
+      btn.addEventListener('click', () => location.reload());
+      bar.append(msg, btn);
+      document.body.appendChild(bar);
+      btn.focus();
+    }
+
+    function check(){
+      fetch('version.json?_=' + Date.now(), { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : null)
+        .then(d => {
+          if (!d) return;
+          const latest = parseInt(d.build, 10) || 0;
+          if (latest > current) {
+            if (document.hidden) location.reload();
+            else notify();
+          }
+        })
+        .catch(() => {});
+    }
+
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
+    setInterval(check, 5 * 60 * 1000); // re-check every 5 min
+    check();
   })();
 </script>
 

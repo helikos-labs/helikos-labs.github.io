@@ -17,8 +17,10 @@ to preview; push to the default branch to deploy.
 ```
 .
 ├── index.html          # The entire landing page (inline CSS/JS, no build)
+├── version.json        # Deploy build tracker (bumped per deploy; see Versioning)
 ├── og-image.png        # 1200×630 social-share image (generated, not hand-edited)
 ├── scripts/gen-og.mjs  # Build-time generator for og-image.png (Node built-ins only)
+├── scripts/bump-version.mjs # Increments version.json + index.html's app-build meta
 ├── CLAUDE.md           # This file
 ├── CNAME               # Custom domain (www.helikos.dev)
 └── .github/            # GitHub Pages / workflow config
@@ -129,10 +131,30 @@ Games with `live: null` render a status pill instead of a launch button.
 - Keep copy concise (one or two sentences per app).
 - The footer year and "Helikos Labs" attribution should stay current.
 
+## Versioning (stale-cache refresh)
+
+A lightweight deploy tracker keeps returning visitors from sitting on a stale
+cached page:
+
+- **`version.json`** (`{ version, build, released, commit }`) is the source of
+  truth deployed at the site root; `build` is a monotonically increasing integer.
+- **`index.html`** bakes the same build into `<meta name="app-build" content="…">`.
+- A small IIFE compares the baked-in build against a `no-store` fetch of
+  `version.json` (on load, on tab refocus, and every 5 min). If the live build is
+  newer it **reloads silently when the tab is hidden**, or shows an accessible
+  `role="status"` "Refresh" prompt (`.update-bar`) when the page is in view —
+  never yanking content out from under an active reader.
+- **Bump on every deploy:** run `node scripts/bump-version.mjs` before pushing to
+  the default branch. It increments `build` in `version.json` and rewrites the
+  `app-build` meta in lockstep (Node built-ins only — no toolchain). Keep the two
+  in sync; if they drift, the checker silently no-ops.
+
 ## Deploying
 
 GitHub Pages publishes from the default branch automatically — merging to it
-deploys. No manual build or release step.
+deploys. **Run `node scripts/bump-version.mjs` first** (see Versioning) so the
+live build number advances and clients pick up the new version; otherwise no
+manual build or release step.
 
 ## Working agreements for Claude
 
