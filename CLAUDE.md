@@ -64,6 +64,13 @@ All styling/JS is **inline** in `index.html` — no Tailwind, no build, no `pack
 - **Accessibility:** stars/columns/niches are focusable (`tabindex`,
   `role="button"`), Escape closes either modal, `prefers-reduced-motion` disables
   the orrery/twinkle/flame.
+- **Section paging:** a fixed `.dot-nav` (right edge) tracks the active stage via
+  IntersectionObserver and jumps to `#heavens/#constellation/#pantheon/#stadium/#lore`.
+  Full-screen CSS **scroll-snap** is a progressive enhancement, enabled only on
+  roomy desktops with motion (`min-width:769px and min-height:700px and
+  prefers-reduced-motion:no-preference`); touch/short/reduced-motion users keep
+  normal scrolling. `scroll-padding-top:60px` clears the fixed nav. Modals stay as
+  in-place overlays, so each stage behaves SPA-like once parked.
 - **Self-contained:** CSS/JS inline; only Google Fonts load remotely; SVG art is
   hand-rolled (no icon CDN), so the page degrades gracefully.
 
