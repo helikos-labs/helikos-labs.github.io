@@ -48,7 +48,7 @@
     --dawn: #b66a32;
     --star: #f5f0e3;
     --mist: #9aa6c2;
-    --mist-dim: #5f6b86;
+    --mist-dim: #76829e;
     --brass: #c9a227;
     --brass-light: #ecd07a;
     --brass-deep: #8a6d1c;
@@ -73,6 +73,23 @@
   a { color: inherit; text-decoration: none; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
 
+  /* visually-hidden but available to assistive tech */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  /* skip link — appears on keyboard focus */
+  .skip-link {
+    position: absolute; top: 8px; left: 50%; z-index: 200;
+    transform: translateX(-50%) translateY(-160%);
+    background: var(--night-2); color: var(--star);
+    font-family: var(--mono); font-size: 12px; letter-spacing: 1px;
+    padding: 10px 18px; border: 1px solid var(--brass); border-radius: 6px;
+    transition: transform .2s;
+  }
+  .skip-link:focus { transform: translateX(-50%) translateY(0); outline: 2px solid var(--brass-light); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }
+
   .eyebrow {
     font-family: var(--mono); font-size: 11px; letter-spacing: 3.5px;
     text-transform: uppercase; color: var(--brass);
@@ -90,7 +107,7 @@
   .brandmark .sigil { width: 22px; height: 22px; color: var(--brass); }
   .brandmark .name { font-family: var(--display); font-size: 15px; letter-spacing: 4px; color: var(--star); font-weight: 600; }
   .nav-links { display: flex; gap: 30px; }
-  .nav-links a { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mist-dim); transition: color .2s; }
+  .nav-links a { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mist-dim); transition: color .2s; padding: 10px 0; margin: -10px 0; }
   .nav-links a:hover { color: var(--brass-light); }
   @media (max-width: 600px){ .nav-links { display: none; } }
 
@@ -152,7 +169,7 @@
   .card.is-dormant .card-role { color: var(--mist-dim); }
   .card-desc { font-size: 16.5px; color: var(--mist); margin-top: 16px; flex: 1 1 auto; }
   .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 24px; }
-  .card-link { font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--brass-light); transition: gap .2s, color .2s; display: inline-flex; align-items: center; gap: 6px; }
+  .card-link { font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--brass-light); transition: gap .2s, color .2s; display: inline-flex; align-items: center; gap: 6px; padding: 8px 2px; margin: -8px -2px; }
   .card-link:hover { color: var(--star); gap: 11px; }
   .card-status { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--mist-dim); border: 1px solid rgba(255,255,255,0.07); padding: 4px 9px; border-radius: 20px; }
   .card-status.live { color: var(--brass-light); border-color: rgba(201,162,39,0.4); }
@@ -184,6 +201,8 @@
     html { scroll-behavior: auto; }
     .reveal { opacity: 1; transform: none; transition: none; }
     .twinkle { animation: none !important; }
+    .card:not(.is-dormant):hover { transform: none; }
+    .card-link:hover { gap: 6px; }
   }
   @media (max-width: 600px){
     body { font-size: 18px; }
@@ -194,8 +213,11 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <!-- ── NAV ── -->
-<nav>
+<header class="banner">
+<nav aria-label="Primary">
   <div class="nav-inner">
     <a href="#top" class="brandmark" aria-label="Helikos Labs home">
       <svg class="sigil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
@@ -212,9 +234,12 @@
     </div>
   </div>
 </nav>
+</header>
+
+<main id="main">
 
 <!-- ── HERO ── -->
-<header id="top" class="hero">
+<section id="top" class="hero" aria-label="Introduction">
   <div class="starlayer" id="heroStars" aria-hidden="true"></div>
   <div class="dawnglow" aria-hidden="true"></div>
 
@@ -224,8 +249,8 @@
       <circle cx="16.5" cy="4.5" r="2.2"/>
       <path d="M16.5 1.4 v1.2 M16.5 7.4 v1.2 M13.4 4.5 h1.2 M19.4 4.5 h1.2"/>
     </svg>
-    <h1>HELIKOS</h1>
-    <div class="sub-mark">· L A B S ·</div>
+    <h1>HELIKOS<span class="sr-only"> Labs</span></h1>
+    <div class="sub-mark" aria-hidden="true">· L A B S ·</div>
     <p class="tagline">Where the Muses build software.</p>
     <p class="lede">A growing pantheon of small, AI-native apps — each named for the deity of its craft. Utilities in the heavens, games below.</p>
   </div>
@@ -235,47 +260,47 @@
     <path d="M0,176 L250,96 L470,182 L690,72 L920,184 L1170,104 L1440,158" fill="none" stroke="rgba(201,162,39,0.28)" stroke-width="1.5"/>
     <path d="M0,320 L0,236 L270,252 L520,186 L770,252 L1020,194 L1270,252 L1440,214 L1440,320 Z" fill="var(--void)"/>
   </svg>
-</header>
+</section>
 
 <!-- ── GODS (utilities) ── -->
-<section id="gods" class="section">
+<section id="gods" class="section" aria-labelledby="gods-heading">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">As Above</span>
-      <h2>Gods</h2>
+      <h2 id="gods-heading">Gods</h2>
       <p>The deity apps — the lab's tools — each named for the god or Muse whose craft it shares.</p>
     </div>
 
     <div class="grid reveal">
       <article class="card">
-        <div class="card-glyph">Α</div>
+        <div class="card-glyph" aria-hidden="true">Α</div>
         <h3 class="card-name">Athena</h3>
         <div class="card-role">AI Creative Studio</div>
         <p class="card-desc">A unified creative studio for building worlds, writing novels, and generating comics — a photoreal writing “Study” wired to multi-modal generation.</p>
         <div class="card-foot">
-          <a class="card-link" href="https://athena.helikos.dev" target="_blank" rel="noopener">Enter →</a>
+          <a class="card-link" href="https://athena.helikos.dev" target="_blank" rel="noopener" aria-label="Enter Athena (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>
           <span class="card-status">Proof of Concept</span>
         </div>
       </article>
 
       <article class="card">
-        <div class="card-glyph">Κ</div>
+        <div class="card-glyph" aria-hidden="true">Κ</div>
         <h3 class="card-name">Kleio</h3>
         <div class="card-role">Precision Transcription</div>
         <p class="card-desc">Precision audio transcription in the browser — drop in a recording and Kleio chronicles it as fast, high-fidelity text from a serverless speech-to-text pipeline.</p>
         <div class="card-foot">
-          <a class="card-link" href="https://kleio.helikos.dev" target="_blank" rel="noopener">Enter →</a>
+          <a class="card-link" href="https://kleio.helikos.dev" target="_blank" rel="noopener" aria-label="Enter Kleio (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>
           <span class="card-status">Proof of Concept</span>
         </div>
       </article>
 
       <article class="card">
-        <div class="card-glyph">Μ</div>
+        <div class="card-glyph" aria-hidden="true">Μ</div>
         <h3 class="card-name">Mnemosyne</h3>
         <div class="card-role">3D Knowledge Galaxy</div>
         <p class="card-desc">A personal second brain rendered as a navigable 3D galaxy — click a node and the universe assembles around it, your notes clustered by meaning and slowly orbiting.</p>
         <div class="card-foot">
-          <a class="card-link" href="https://mnemosyne.helikos.dev" target="_blank" rel="noopener">Enter →</a>
+          <a class="card-link" href="https://mnemosyne.helikos.dev" target="_blank" rel="noopener" aria-label="Enter Mnemosyne (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>
           <span class="card-status">In Development</span>
         </div>
       </article>
@@ -286,28 +311,28 @@
 <div class="realm-rule" aria-hidden="true"></div>
 
 <!-- ── GAMES ── -->
-<section id="games" class="section">
+<section id="games" class="section" aria-labelledby="games-heading">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">So Below</span>
-      <h2>Games</h2>
+      <h2 id="games-heading">Games</h2>
       <p>At the foot of Helicon, in the stadium, the games are held in the gods' honour.</p>
     </div>
 
     <div class="grid reveal">
       <article class="card">
-        <div class="card-glyph">♪</div>
+        <div class="card-glyph" aria-hidden="true">♪</div>
         <h3 class="card-name">PianoQuest</h3>
         <div class="card-role">Music · RPG</div>
         <p class="card-desc">An RPG that turns piano practice into a themed adventure — pick from five worlds, defeat enemies by completing songs, and collect gear across a procedurally built quest map.</p>
         <div class="card-foot">
-          <a class="card-link" href="https://pianoquest.helikos.dev" target="_blank" rel="noopener">Enter →</a>
+          <a class="card-link" href="https://pianoquest.helikos.dev" target="_blank" rel="noopener" aria-label="Enter PianoQuest (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>
           <span class="card-status live">Now competing</span>
         </div>
       </article>
 
       <article class="card is-dormant">
-        <div class="card-glyph">Β</div>
+        <div class="card-glyph" aria-hidden="true">Β</div>
         <h3 class="card-name">Bitthrone</h3>
         <div class="card-role">MOBA · 2D Brawler</div>
         <p class="card-desc">A mobile-first, portrait, top-down 2D MOBA brawler built with Phaser 3 — fast arena combat in the palm of your hand. Its exhibition is forthcoming.</p>
@@ -317,7 +342,7 @@
       </article>
 
       <article class="card is-dormant">
-        <div class="card-glyph">Κ</div>
+        <div class="card-glyph" aria-hidden="true">Κ</div>
         <h3 class="card-name">Kybos</h3>
         <div class="card-role">Dice · Chance</div>
         <p class="card-desc">κύβος — the die. A game of chance under the eye of Tyche. Its lane is reserved; the contest is yet to begin.</p>
@@ -332,17 +357,19 @@
 <!-- ── LORE ── -->
 <section id="lore" class="lore">
   <div class="wrap">
-    <div class="scroll-rule"></div>
+    <div class="scroll-rule" aria-hidden="true"></div>
     <p>Helikos is Mount Helicon — in Greek myth the home of the Muses and the spring of all inspiration, struck from the rock by the hoof of Pegasus.</p>
     <p class="plain">Helikos Labs builds small, AI-native apps in that spirit. The gods keep the heavens — tools named for the deity whose craft they share — while the games are held below, in their honour. One sharp idea at a time, each kept live in the open.</p>
     <p class="antikythera">The first computer was Greek. So is this lab.</p>
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap foot">
     <span>© 2026 Helikos Labs · Of the mountain of the Muses</span>
-    <span><a href="https://github.com/helikos-labs" target="_blank" rel="noopener">github.com/helikos-labs</a> &nbsp;·&nbsp; <a href="#top">Ascend ↑</a></span>
+    <span><a href="https://github.com/helikos-labs" target="_blank" rel="noopener" aria-label="Helikos Labs on GitHub (opens in a new tab)">github.com/helikos-labs</a> &nbsp;·&nbsp; <a href="#top">Ascend ↑</a></span>
   </div>
 </footer>
 
