@@ -40,22 +40,26 @@ scenery. All styling/JS is **inline** in `index.html` — no Tailwind, no build,
 `package.json`.
 
 - **Palette (CSS custom properties in `:root`):** deep midnight (`--void: #080b14`,
-  `--night`), warm starlight (`--star: #f5f0e3`), cool mist text (`--mist`,
-  `--mist-dim`), and a **brass/gold accent** (`--brass: #c9a227`, `--brass-light`,
-  `--brass-deep`) with a faint `--line` brass rule colour. Keep brass-on-midnight
-  when adding sections; the variable set is intentionally lean.
+  `--night`, `--night-2`) rising to a `--horizon`/`--dawn` amber band behind the
+  hero mountains, warm starlight (`--star: #f5f0e3`), cool mist text (`--mist`,
+  `--mist-dim`), a **brass/gold accent** (`--brass: #c9a227`, `--brass-light`,
+  `--brass-deep`), an `--aegean` secondary glow, and a faint `--line` brass rule
+  colour. Keep brass-on-midnight when adding sections.
 - **Typography:** `Cinzel` (inscriptional caps) for the wordmark, section titles,
   and app names; `Cormorant Garamond` for serif body/taglines (italic for lede);
   `JetBrains Mono` for small uppercase labels. Loaded from Google Fonts.
 - **Two realms — "As Above, So Below":** the site splits apps into **gods**
   (utilities, "As Above") and **games** ("So Below"), each its own section.
 - **Structure (top → bottom):** fixed minimal nav with a mountain+star **sigil**
-  + `HELIKOS LABS` wordmark and `Gods / Games / Lore` links; a **typographic hero**
-  (large sigil mark, `HELIKOS` wordmark, tagline, lede — a single soft brass radial
-  glow, no orrery/starfield); a **Gods** section (`#gods`) of `.card`s in a `.grid`;
-  a hairline `.realm-rule` divider; a **Games** section (`#games`) of `.card`s; a
-  **Lore** section; footer. No mountband, colonnade, theatron, braziers, modals, or
-  dot-nav — those were removed in the minimalist redo.
+  + `HELIKOS LABS` wordmark and `Gods / Games / Lore` links; an **atmospheric but
+  typographic hero** — a full-height "sky above, mountains below" scene (layered
+  void→night→horizon gradient + brass/aegean radial glows, a JS-scattered
+  `.starlayer` twinkle field, a `.dawnglow` behind a two-range Mount Helicon
+  `.mountains` SVG silhouette with a brass ridge) carrying the centred sigil mark,
+  `HELIKOS` wordmark, tagline and lede; a **Gods** section (`#gods`) of `.card`s in
+  a `.grid`; a hairline `.realm-rule` divider; a **Games** section (`#games`) of
+  `.card`s; a **Lore** section; footer. No colonnade, theatron, braziers, modals,
+  or dot-nav — those stay removed; the scenery lives only as hero backdrop.
 - **Cards:** each app is a self-contained `.card` (no modals, no JS data objects) —
   glyph (Greek letter / `♪`), `.card-name`, `.card-role`, `.card-desc`, and a
   `.card-foot` with an `Enter →` `.card-link` (live apps) plus a `.card-status`
@@ -67,8 +71,8 @@ scenery. All styling/JS is **inline** in `index.html` — no Tailwind, no build,
 - **Responsiveness:** fluid `clamp()` type; grids are `auto-fit minmax(290px,1fr)`;
   nav links hide under `600px`.
 - **Accessibility:** the only interactive elements are links (`a:focus-visible`
-  gets a brass outline); `prefers-reduced-motion` disables smooth scroll and the
-  reveal transition (content shown at once).
+  gets a brass outline); `prefers-reduced-motion` disables smooth scroll, the
+  reveal transition (content shown at once), and the starfield twinkle.
 - **Self-contained:** CSS/JS inline; only Google Fonts load remotely; the sigil is
   hand-rolled SVG (no icon CDN), so the page degrades gracefully.
 - **Head / SEO / sharing:** `<head>` carries canonical, full OpenGraph + Twitter
@@ -79,7 +83,8 @@ scenery. All styling/JS is **inline** in `index.html` — no Tailwind, no build,
 - **Scroll-reveal:** elements with `.reveal` fade/rise via `.in`, toggled by one
   small IntersectionObserver IIFE; applied to each `.sec-head` and each `.grid`.
   Neutralized under `prefers-reduced-motion` (shown at once) and when IO is
-  unavailable. This is the page's only script.
+  unavailable. The page has just two tiny IIFEs: the starfield scatter and this
+  scroll-reveal.
 
 ## The Helikos naming theme
 
