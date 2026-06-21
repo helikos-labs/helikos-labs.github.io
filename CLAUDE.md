@@ -136,25 +136,29 @@ Games with `live: null` render a status pill instead of a launch button.
 A lightweight deploy tracker keeps returning visitors from sitting on a stale
 cached page:
 
-- **`version.json`** (`{ version, build, released, commit }`) is the source of
-  truth deployed at the site root; `build` is a monotonically increasing integer.
+- **`version.json`** (`{ version, build, released, commit }`) is served at the
+  site root; `build` is the repo's **commit count** (monotonic, stateless).
 - **`index.html`** bakes the same build into `<meta name="app-build" content="…">`.
 - A small IIFE compares the baked-in build against a `no-store` fetch of
   `version.json` (on load, on tab refocus, and every 5 min). If the live build is
   newer it **reloads silently when the tab is hidden**, or shows an accessible
   `role="status"` "Refresh" prompt (`.update-bar`) when the page is in view —
   never yanking content out from under an active reader.
-- **Bump on every deploy:** run `node scripts/bump-version.mjs` before pushing to
-  the default branch. It increments `build` in `version.json` and rewrites the
-  `app-build` meta in lockstep (Node built-ins only — no toolchain). Keep the two
-  in sync; if they drift, the checker silently no-ops.
+- **Auto-bumped at deploy:** the Pages workflow runs `node scripts/bump-version.mjs`
+  in the runner before uploading the artifact, so every deploy serves a fresh
+  build computed from the commit count — no commit-back, no loops. The
+  `version.json`/`app-build` values **committed in the repo are placeholders**;
+  the authoritative numbers are stamped at deploy time.
+- You can still run `node scripts/bump-version.mjs` locally (e.g. to preview);
+  it uses the same commit-count rule (Node built-ins only — no toolchain).
 
 ## Deploying
 
-GitHub Pages publishes from the default branch automatically — merging to it
-deploys. **Run `node scripts/bump-version.mjs` first** (see Versioning) so the
-live build number advances and clients pick up the new version; otherwise no
-manual build or release step.
+GitHub Pages deploys via the **GitHub Actions** workflow
+(`.github/workflows/static.yml`) on every push to the default branch — merging to
+it deploys. The workflow **auto-stamps the build number** before publishing (see
+Versioning), so returning clients pick up the new version automatically. No manual
+build or release step.
 
 ## Working agreements for Claude
 
