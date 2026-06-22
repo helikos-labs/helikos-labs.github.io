@@ -43,38 +43,47 @@ in `index.html` — no Tailwind, no build, no `package.json`.
 
 - **Palette (CSS custom properties in `:root`):** deep midnight (`--void: #080b14`,
   `--night`, `--night-2`) rising to a `--horizon`/`--dawn` amber band behind the
-  hero mountains, warm starlight (`--star: #f5f0e3`), cool mist text (`--mist`,
-  `--mist-dim`), a **brass/gold accent** (`--brass: #c9a227`, `--brass-light`,
-  `--brass-deep`), an `--aegean` secondary glow, and a faint `--line` brass rule
-  colour. Keep brass-on-midnight when adding sections.
+  **towns' mountain ridge**, warm starlight (`--star: #f5f0e3`), cool mist text
+  (`--mist`, `--mist-dim`), a **brass/gold accent** (`--brass: #c9a227`,
+  `--brass-light`, `--brass-deep`), an `--aegean` secondary glow, an `--ember`
+  amber for the town lights, and a faint `--line` brass rule colour. Keep
+  brass-on-midnight when adding sections.
 - **Typography:** `Cinzel` (inscriptional caps) for the wordmark, section titles,
   and app names; `Cormorant Garamond` for serif body/taglines (italic for lede);
   `JetBrains Mono` for small uppercase labels. Loaded from Google Fonts.
-- **Two realms — "As Above, So Below":** the site splits apps into **gods**
-  (utilities, "As Above") and **games** ("So Below"), each its own section.
+- **Two realms — "As Above, So Below":** **gods** (the deity apps, "As Above") are
+  bright **stars** in the night sky; the other apps ("So Below") are lighted
+  **towns** descending a mountain. Avoid "games"/"stadium" framing.
 - **Structure (top → bottom):** fixed minimal nav with a mountain+star **sigil**
-  + `HELIKOS LABS` wordmark and `Gods / Games / Lore` links; an **atmospheric but
-  typographic hero** — a full-height "sky above, mountains below" scene (layered
-  void→night→horizon gradient + brass/aegean radial glows, a JS-scattered
-  `.starlayer` twinkle field, a `.dawnglow` behind a two-range Mount Helikon
-  `.mountains` SVG silhouette with a brass ridge) carrying the centred sigil mark,
-  `HELIKOS` wordmark, tagline and lede; a **Gods** section (`#gods`) of `.card`s in
-  a `.grid`; a hairline `.realm-rule` divider; a **Games** section (`#games`) of
-  `.card`s; a **Lore** section; footer. No colonnade, theatron, braziers, modals,
-  or dot-nav — those stay removed; the scenery lives only as hero backdrop.
-- **Cards:** each app is a self-contained `.card` (no modals, no JS data objects) —
-  glyph (an initial letterform / `♪`), `.card-name`, `.card-role`, `.card-desc`, and a
-  `.card-foot` with an `Enter →` `.card-link` (live apps) plus a `.card-status`
-  pill. Unbuilt apps use `.card.is-dormant` (dimmed glyph/role, no hover lift) and
-  show only a status pill — no link. Live status pills get `.card-status.live`.
-- **Adding a god/game:** add an `<article class="card">` (or `.card.is-dormant`)
-  to the matching `.grid`. Copy lives directly in the HTML — keep it in lockstep
-  with the tables below. There are no `APPS`/`GAMES` JS objects anymore.
-- **Responsiveness:** fluid `clamp()` type; grids are `auto-fit minmax(290px,1fr)`;
-  nav links hide under `600px`.
-- **Accessibility:** the only interactive elements are links (`a:focus-visible`
-  gets a brass outline); `prefers-reduced-motion` disables smooth scroll, the
-  reveal transition (content shown at once), and the starfield twinkle.
+  + `HELIKOS LABS` wordmark and `Gods / Towns / Lore` links; a **typographic hero**
+  — a full-height night sky (void→night gradient + brass/aegean radial glows and a
+  JS-scattered `.starlayer` twinkle field, no mountains here) carrying the centred
+  sigil mark, `HELIKOS` wordmark, tagline and lede; a **Gods** section (`#gods`,
+  also starlit) where each god is a bright **`.god-star`** in a vertical
+  `role="tablist"` that drives one **`.glass` `.god-panel`** descriptor card
+  (`role="tabpanel"`); a **Towns** section (`#towns`) opening with a Mount Helikon
+  **`.ridge`** silhouette + `--horizon` dawn band, then a `.slope` of staggered
+  **`.town`** `.glass` cards, each with a warm **`.town-light`** lantern; a
+  **Lore** section; footer.
+- **Gods (stars + glass panel):** the `.god-stars` tablist (one `.god-star`
+  button per god) updates the shared `.god-panel` from the **`GODS`** JS object
+  (glyph, role, name, desc, status, live) — roving `tabindex`, arrow/Home/End
+  keys, `aria-selected`, `aria-live` panel. Athena's panel is hardcoded as the
+  no-JS default. Active star gets a starlight glow + sparkle rays.
+- **Towns (mountain lights):** each `.town` is a self-contained `.glass` card
+  (no JS) — `.town-light` (dimmed via `.town.dim` for unbuilt), `.town-name`,
+  `.town-type`, `.town-desc`, and a `.town-foot` with a `Visit →` `.card-link`
+  (live) plus a `.card-status` (`.live` for lit towns). Staggered down the slope
+  via `:nth-child` `align-self`, joined by a dashed `.slope::before` trail.
+- **Adding an app:** a god → add to the `GODS` object **and** a `.god-star`
+  button; a town → add a `<article class="town glass">` (add `.dim` if unbuilt) to
+  `.slope`. Keep copy in lockstep with the tables below.
+- **Responsiveness:** fluid `clamp()` type; `.gods-wrap` is a 2-col grid that
+  stacks under `600px` (stars become a wrapping row); towns un-stagger to full
+  width on mobile; nav links hide under `600px`.
+- **Accessibility:** interactive elements are links and the gods tablist (full
+  keyboard support, visible brass focus); `prefers-reduced-motion` disables smooth
+  scroll, the reveal transition, the starfield twinkle, and the town-light pulse.
 - **Self-contained:** CSS/JS inline; only Google Fonts load remotely; the sigil is
   hand-rolled SVG (no icon CDN), so the page degrades gracefully.
 - **Head / SEO / sharing:** `<head>` carries canonical, full OpenGraph + Twitter
@@ -83,18 +92,19 @@ in `index.html` — no Tailwind, no build, no `package.json`.
   (the mountain+star sigil as a `data:` URI — no file). Keep these in sync with
   the live domain `https://www.helikos.dev/`.
 - **Scroll-reveal:** elements with `.reveal` fade/rise via `.in`, toggled by one
-  small IntersectionObserver IIFE; applied to each `.sec-head` and each `.grid`.
-  Neutralized under `prefers-reduced-motion` (shown at once) and when IO is
-  unavailable. The page has just two tiny IIFEs: the starfield scatter and this
-  scroll-reveal.
+  small IntersectionObserver IIFE; applied to each `.sec-head`, the `.gods-wrap`,
+  and the `.slope`. Neutralized under `prefers-reduced-motion` (shown at once) and
+  when IO is unavailable. The page has four small IIFEs: starfield scatter, the
+  gods tablist, scroll-reveal, and the version checker.
 
 ## The Helikos naming theme
 
 Helikos (Mount Helikon + *kosmos*, the ordered sky) — apps are named after the
-deities and Muses of myth. **Gods** (utilities, "As Above") carry a short **role/category**
-(e.g. "Precision Transcription"); **Games** ("So Below") carry a **type**
-(e.g. "Music · RPG"). Both surface an `Enter →` link to `https://<name>.helikos.dev`
-when live. Keep the role/type lines terse.
+deities and Muses of myth. **Gods** (the deity apps, "As Above", shown as stars)
+carry a short **role/category** (e.g. "Precision Transcription"); **Towns** ("So
+Below", lights down the mountain) carry a **type** (e.g. "Music · RPG"). Live apps
+surface a launch link (`Enter →` for gods, `Visit →` for towns) to
+`https://<name>.helikos.dev`. Keep the role/type lines terse.
 
 ## The apps (portfolio)
 
@@ -104,7 +114,7 @@ when live. Keep the role/type lines terse.
 > canonical marketing copy — update them in lockstep with `index.html`. Apps are
 > hosted on **Cloudflare Pages** (`*.pages.dev`) and served at `*.helikos.dev`.
 
-**Gods (the heavens / pantheon):**
+**Gods (the heavens — bright stars, "As Above"):**
 
 | God        | Subdomain                | What it is                                                                                  | Status         |
 |------------|--------------------------|---------------------------------------------------------------------------------------------|----------------|
@@ -112,22 +122,23 @@ when live. Keep the role/type lines terse.
 | Kleio      | kleio.helikos.dev        | Precision browser transcription; static frontend + serverless speech-to-text (Whisper/Cloud Run) | Proof of Concept |
 | Mnemosyne  | mnemosyne.helikos.dev    | 3D knowledge galaxy — a personal "second brain" as a navigable Three.js universe of notes   | In Development |
 
-**Games (the stadium):**
+**Towns (the mountain — lights, "So Below"):**
 
-| Game       | Subdomain                | What it is                                                                  | Status (label)         |
+| Town       | Subdomain                | What it is                                                                  | Status (label)         |
 |------------|--------------------------|----------------------------------------------------------------------------|------------------------|
-| PianoQuest | pianoquest.helikos.dev   | RPG that turns piano practice into a quest across five worlds (Pythian)     | Live — "Now competing" |
-| Bitthrone  | (not deployed)           | Mobile-first portrait top-down 2D MOBA brawler (Phaser 3)                   | "In training" — no live URL |
-| Kybos      | kybos.helikos.dev        | κύβος = die; a game of fortune (Tyche). Repo not yet readable              | "Awaiting the games" — reserved |
+| PianoQuest | pianoquest.helikos.dev   | RPG that turns piano practice into a quest across five worlds (Pythian)     | Live — "Lights on" |
+| Bitthrone  | (not deployed)           | Mobile-first portrait top-down 2D MOBA brawler (Phaser 3)                   | "Under construction" — no live URL |
+| Kybos      | kybos.helikos.dev        | κύβος = die; a small game of chance (Tyche). Repo not yet readable          | "Foundations laid" — reserved |
 
 Status badges used on the page: gods use `Proof of Concept`/`In Development`;
-games use flavor labels (`Now competing`/`In training`/`Awaiting the games`).
-Games with `live: null` render a status pill instead of a launch button.
+towns use light/build labels (`Lights on`/`Under construction`/`Foundations laid`).
+Unbuilt towns (`.town.dim`, no live URL) show a status pill instead of a launch
+link; lit towns get `.card-status.live`.
 
 ## Editing the landing page
 
-- To add or change an app, edit the corresponding card in the app grid in
-  `index.html` and the table above. Keep both in sync.
+- To add or change an app, edit it in `index.html` (gods: the `GODS` object + its
+  `.god-star`; towns: its `.town` card) and the table above. Keep both in sync.
 - Keep copy concise (one or two sentences per app).
 - The footer year and "Helikos Labs" attribution should stay current.
 

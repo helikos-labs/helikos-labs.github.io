@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Helikos Labs — a pantheon of AI-native apps</title>
-<meta name="description" content="Helikos Labs builds small, AI-native apps named for the deities and Muses of Mount Helikon — utilities in the heavens, games in the stadium. A growing pantheon beneath the stars." />
+<meta name="description" content="Helikos Labs builds small, AI-native apps named for the deities and Muses of Mount Helikon — gods burning overhead as stars, smaller apps alight like towns down the mountain. A growing pantheon beneath the sky." />
 <meta name="theme-color" content="#0a0e1a" />
 <meta name="color-scheme" content="dark" />
 <meta name="author" content="Helikos Labs" />
@@ -14,7 +14,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080b14'/%3E%3Ccircle cx='32' cy='19' r='6' fill='%23c9a227'/%3E%3Cpath d='M6 52 L26 26 L38 40 L46 30 L58 52 Z' fill='none' stroke='%23c9a227' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
 <meta property="og:site_name" content="Helikos Labs" />
 <meta property="og:title" content="Helikos Labs — As Above, So Below" />
-<meta property="og:description" content="A growing pantheon of AI-native apps, named for the deities and Muses of Mount Helikon — utilities in the heavens, games in the stadium." />
+<meta property="og:description" content="A growing pantheon of AI-native apps, named for the deities and Muses of Mount Helikon — gods overhead as stars, smaller apps alight like towns down the mountain." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.helikos.dev/" />
 <meta property="og:locale" content="en_US" />
@@ -33,7 +33,7 @@
   "name": "Helikos Labs",
   "url": "https://www.helikos.dev/",
   "logo": "https://www.helikos.dev/og-image.png",
-  "description": "Helikos Labs builds small, AI-native apps named for the deities and Muses of Mount Helikon — utilities in the heavens, games in the stadium.",
+  "description": "Helikos Labs builds small, AI-native apps named for the deities and Muses of Mount Helikon — gods overhead as stars, smaller apps alight like towns down the mountain.",
   "sameAs": ["https://github.com/helikos-labs"]
 }
 </script>
@@ -54,6 +54,7 @@
     --brass-light: #ecd07a;
     --brass-deep: #8a6d1c;
     --aegean: #5fb6c9;
+    --ember: #ffb347;
     --line: rgba(201,162,39,0.18);
     --display: 'Cinzel', serif;
     --serif: 'Cormorant Garamond', Georgia, serif;
@@ -120,17 +121,12 @@
     background:
       radial-gradient(1100px 560px at 50% -6%, rgba(201,162,39,0.10), transparent 60%),
       radial-gradient(900px 520px at 80% 14%, rgba(95,182,201,0.05), transparent 60%),
-      linear-gradient(to bottom, var(--void) 0%, var(--night) 46%, var(--night-2) 74%, var(--horizon) 100%);
+      linear-gradient(to bottom, var(--void) 0%, var(--night) 55%, var(--night-2) 100%);
   }
-  /* starfield sky */
+  /* starfield sky (hero + gods) */
   .starlayer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
   .twinkle { position: absolute; border-radius: 50%; background: var(--star); opacity: .5; animation: tw 4s ease-in-out infinite; }
   @keyframes tw { 0%,100%{ opacity:.2; transform: scale(.8);} 50%{ opacity:.9; transform: scale(1.15);} }
-  /* dawn glow behind the ridgeline */
-  .dawnglow { position: absolute; left: 50%; bottom: 3%; transform: translateX(-50%); width: 72%; height: 30%; z-index: 1; pointer-events: none; filter: blur(4px);
-    background: radial-gradient(ellipse at center bottom, rgba(201,162,39,0.16), rgba(182,106,50,0.06) 46%, transparent 72%); }
-  /* Mount Helikon silhouette */
-  .mountains { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: clamp(160px, 30vh, 300px); z-index: 2; pointer-events: none; display: block; }
 
   .hero-content { position: relative; z-index: 3; }
   .hero .mark { width: 56px; height: 56px; color: var(--brass); margin-bottom: 34px; opacity: .92; }
@@ -151,31 +147,62 @@
   .sec-head h2 { font-family: var(--display); font-weight: 600; color: var(--star); font-size: clamp(28px, 4.6vw, 42px); letter-spacing: 2px; }
   .sec-head p { margin-top: 16px; color: var(--mist-dim); font-size: 18px; }
 
-  /* ── CARD GRID ── */
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 22px; }
-  .card {
-    position: relative; display: flex; flex-direction: column;
-    padding: 32px 30px 28px; border: 1px solid var(--line); border-radius: 14px;
-    background: linear-gradient(165deg, rgba(255,255,255,0.018), rgba(255,255,255,0));
-    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  /* ── Glass panel (shared) ── */
+  .glass {
+    background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    backdrop-filter: blur(16px) saturate(125%); -webkit-backdrop-filter: blur(16px) saturate(125%);
+    border: 1px solid rgba(255,255,255,0.14); border-radius: 18px;
+    box-shadow: 0 24px 70px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.10);
   }
-  .card:not(.is-dormant):hover {
-    transform: translateY(-5px); border-color: rgba(201,162,39,0.45);
-    box-shadow: 0 24px 60px -28px rgba(0,0,0,0.85), 0 0 50px -26px rgba(201,162,39,0.45);
-  }
-  .card-glyph { font-family: var(--display); font-size: 38px; font-weight: 700; color: var(--brass-light); line-height: 1; }
-  .card.is-dormant .card-glyph { color: var(--mist-dim); }
-  .card-name { font-family: var(--display); font-size: 23px; letter-spacing: 1.5px; color: var(--star); margin-top: 16px; }
-  .card-role { font-family: var(--mono); font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--brass); margin-top: 7px; }
-  .card.is-dormant .card-role { color: var(--mist-dim); }
-  .card-desc { font-size: 16.5px; color: var(--mist); margin-top: 16px; flex: 1 1 auto; }
-  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 24px; }
+  /* shared launch link + status pill */
   .card-link { font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--brass-light); transition: gap .2s, color .2s; display: inline-flex; align-items: center; gap: 6px; padding: 8px 2px; margin: -8px -2px; }
   .card-link:hover { color: var(--star); gap: 11px; }
-  .card-status { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--mist-dim); border: 1px solid rgba(255,255,255,0.07); padding: 4px 9px; border-radius: 20px; }
+  .card-status { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--mist-dim); border: 1px solid rgba(255,255,255,0.10); padding: 4px 9px; border-radius: 20px; white-space: nowrap; }
   .card-status.live { color: var(--brass-light); border-color: rgba(201,162,39,0.4); }
 
-  .realm-rule { width: 100%; max-width: 1080px; margin: 0 auto; height: 1px; background: linear-gradient(to right, transparent, var(--line), transparent); }
+  /* ── GODS — bright stars + glass descriptor panel ── */
+  #gods { position: relative; overflow: hidden; background: linear-gradient(to bottom, var(--night-2) 0%, var(--night) 55%, var(--night-2) 100%); }
+  #gods .wrap { position: relative; z-index: 2; }
+  .gods-wrap { display: grid; grid-template-columns: minmax(170px, 230px) 1fr; gap: clamp(28px, 5vw, 60px); align-items: center; max-width: 880px; margin: 0 auto; }
+  .god-stars { display: flex; flex-direction: column; gap: 8px; }
+  .god-star { position: relative; display: flex; align-items: center; gap: 16px; background: none; border: 0; cursor: pointer; text-align: left; padding: 14px 12px; border-radius: 12px; color: var(--mist); transition: background .25s, color .25s; }
+  .god-star:hover { background: rgba(255,255,255,0.04); color: var(--star); }
+  .god-star .gstar { position: relative; flex: 0 0 auto; width: 12px; height: 12px; border-radius: 50%; background: var(--mist-dim); transition: background .3s, box-shadow .3s, transform .3s; }
+  .god-star .gstar::before, .god-star .gstar::after { content: ''; position: absolute; left: 50%; top: 50%; background: var(--brass-light); opacity: 0; transition: opacity .3s; transform: translate(-50%,-50%); }
+  .god-star .gstar::before { width: 1.5px; height: 30px; }
+  .god-star .gstar::after  { width: 30px; height: 1.5px; }
+  .god-star .gstar-name { font-family: var(--display); font-size: 17px; letter-spacing: 1.5px; }
+  .god-star[aria-selected="true"] { color: var(--star); }
+  .god-star[aria-selected="true"] .gstar { background: var(--star); transform: scale(1.25); box-shadow: 0 0 0 3px rgba(201,162,39,0.16), 0 0 18px 5px rgba(236,208,122,0.85); }
+  .god-star[aria-selected="true"] .gstar::before, .god-star[aria-selected="true"] .gstar::after { opacity: .55; }
+  .god-star:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 2px; }
+  .god-panel { position: relative; padding: 34px 34px 30px; min-height: 232px; }
+  .gp-glyph { font-family: var(--display); font-size: 44px; font-weight: 700; color: var(--brass-light); line-height: 1; }
+  .gp-role { font-family: var(--mono); font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--brass); margin-top: 12px; }
+  .gp-name { font-family: var(--display); font-size: 26px; letter-spacing: 1.5px; color: var(--star); margin-top: 6px; }
+  .gp-desc { font-size: 16.5px; color: var(--mist); margin-top: 14px; }
+  .gp-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; }
+
+  /* ── TOWNS — lighted settlements down the mountain ── */
+  .towns { position: relative; overflow: hidden; padding: 0 0 110px; background: linear-gradient(to bottom, var(--night-2) 0%, var(--horizon) 9%, #181020 22%, var(--void) 60%); }
+  .ridge { display: block; width: 100%; height: clamp(120px, 20vh, 240px); }
+  .towns .wrap { position: relative; z-index: 2; }
+  .slope { position: relative; display: flex; flex-direction: column; gap: 24px; max-width: 760px; margin: 0 auto; }
+  .slope::before { content: ''; position: absolute; top: 12px; bottom: 12px; left: 50%; border-left: 1px dashed var(--line); transform: translateX(-50%); }
+  .town { position: relative; display: flex; gap: 16px; align-items: flex-start; width: min(440px, 90%); padding: 22px 24px; }
+  .slope .town:nth-child(1) { align-self: flex-end; }
+  .slope .town:nth-child(2) { align-self: center; }
+  .slope .town:nth-child(3) { align-self: flex-start; }
+  .town-light { flex: 0 0 auto; width: 13px; height: 13px; margin-top: 6px; border-radius: 50%; background: radial-gradient(circle, #fff0cf 10%, var(--ember) 55%, rgba(255,160,70,0) 72%); box-shadow: 0 0 16px 4px rgba(255,160,70,0.55); animation: lantern 3.2s ease-in-out infinite; }
+  .town.dim .town-light { background: var(--mist-dim); box-shadow: none; animation: none; opacity: .5; }
+  @keyframes lantern { 0%,100%{ opacity: .82; } 50%{ opacity: 1; } }
+  .town-body { flex: 1 1 auto; }
+  .town-name { font-family: var(--display); font-size: 21px; letter-spacing: 1.5px; color: var(--star); }
+  .town.dim .town-name { color: var(--mist); }
+  .town-type { font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--brass); margin-top: 6px; }
+  .town.dim .town-type { color: var(--mist-dim); }
+  .town-desc { font-size: 16px; color: var(--mist); margin-top: 12px; }
+  .town-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; }
 
   /* ── LORE ── */
   .lore { text-align: center; padding: 110px 0; }
@@ -216,14 +243,17 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .reveal { opacity: 1; transform: none; transition: none; }
-    .twinkle { animation: none !important; }
-    .card:not(.is-dormant):hover { transform: none; }
+    .twinkle, .town-light { animation: none !important; }
     .card-link:hover { gap: 6px; }
   }
   @media (max-width: 600px){
     body { font-size: 18px; }
     .section { padding: 80px 0; }
     .lore { padding: 80px 0; }
+    .gods-wrap { grid-template-columns: 1fr; gap: 24px; }
+    .god-stars { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 6px; }
+    .slope .town { align-self: center !important; width: 100%; }
+    .slope::before { display: none; }
   }
 </style>
 </head>
@@ -245,7 +275,7 @@
     </a>
     <div class="nav-links">
       <a href="#gods">Gods</a>
-      <a href="#games">Games</a>
+      <a href="#towns">Towns</a>
       <a href="#lore">Lore</a>
     </div>
   </div>
@@ -256,8 +286,7 @@
 
 <!-- ── HERO ── -->
 <section id="top" class="hero" aria-label="Introduction">
-  <div class="starlayer" id="heroStars" aria-hidden="true"></div>
-  <div class="dawnglow" aria-hidden="true"></div>
+  <div class="starlayer" data-count="70" aria-hidden="true"></div>
 
   <div class="hero-content">
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
@@ -268,102 +297,95 @@
     <h1>HELIKOS<span class="sr-only"> Labs</span></h1>
     <div class="sub-mark" aria-hidden="true">· L A B S ·</div>
     <p class="tagline">Where the Muses build software.</p>
-    <p class="lede">A growing pantheon of small, AI-native apps — each named for the deity of its craft. Utilities in the heavens, games below.</p>
+    <p class="lede">A growing pantheon of small, AI-native apps — deities burning overhead as stars, and towns of small apps alight down the mountain below.</p>
   </div>
-
-  <svg class="mountains" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-    <path d="M0,320 L0,176 L250,96 L470,182 L690,72 L920,184 L1170,104 L1440,158 L1440,320 Z" fill="#161022"/>
-    <path d="M0,176 L250,96 L470,182 L690,72 L920,184 L1170,104 L1440,158" fill="none" stroke="rgba(201,162,39,0.28)" stroke-width="1.5"/>
-    <path d="M0,320 L0,236 L270,252 L520,186 L770,252 L1020,194 L1270,252 L1440,214 L1440,320 Z" fill="var(--void)"/>
-  </svg>
 </section>
 
-<!-- ── GODS (utilities) ── -->
+<!-- ── GODS — bright stars in the sky ── -->
 <section id="gods" class="section" aria-labelledby="gods-heading">
+  <div class="starlayer" data-count="46" aria-hidden="true"></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">As Above</span>
       <h2 id="gods-heading">Gods</h2>
-      <p>The deity apps — the lab's tools — each named for the god or Muse whose craft it shares.</p>
+      <p>The deity apps — the lab's tools — burning overhead as bright stars. Choose one to read its light.</p>
     </div>
 
-    <div class="grid reveal">
-      <article class="card">
-        <div class="card-glyph" aria-hidden="true">Α</div>
-        <h3 class="card-name">Athena</h3>
-        <div class="card-role">AI Creative Studio</div>
-        <p class="card-desc">A unified creative studio for building worlds, writing novels, and generating comics — a photoreal writing “Study” wired to multi-modal generation.</p>
-        <div class="card-foot">
+    <div class="gods-wrap reveal">
+      <div class="god-stars" role="tablist" aria-orientation="vertical" aria-label="Gods">
+        <button class="god-star" role="tab" id="tab-athena" aria-controls="god-panel" aria-selected="true" data-god="athena">
+          <span class="gstar" aria-hidden="true"></span><span class="gstar-name">Athena</span>
+        </button>
+        <button class="god-star" role="tab" id="tab-kleio" aria-controls="god-panel" aria-selected="false" tabindex="-1" data-god="kleio">
+          <span class="gstar" aria-hidden="true"></span><span class="gstar-name">Kleio</span>
+        </button>
+        <button class="god-star" role="tab" id="tab-mnemosyne" aria-controls="god-panel" aria-selected="false" tabindex="-1" data-god="mnemosyne">
+          <span class="gstar" aria-hidden="true"></span><span class="gstar-name">Mnemosyne</span>
+        </button>
+      </div>
+
+      <div class="glass god-panel" id="god-panel" role="tabpanel" aria-labelledby="tab-athena" tabindex="0" aria-live="polite">
+        <div class="gp-glyph" aria-hidden="true">Α</div>
+        <div class="gp-role">AI Creative Studio</div>
+        <h3 class="gp-name">Athena</h3>
+        <p class="gp-desc">A unified creative studio for building worlds, writing novels, and generating comics — a photoreal writing “Study” wired to multi-modal generation.</p>
+        <div class="gp-foot">
           <a class="card-link" href="https://athena.helikos.dev" target="_blank" rel="noopener" aria-label="Enter Athena (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>
           <span class="card-status">Proof of Concept</span>
         </div>
-      </article>
-
-      <article class="card">
-        <div class="card-glyph" aria-hidden="true">Κ</div>
-        <h3 class="card-name">Kleio</h3>
-        <div class="card-role">Precision Transcription</div>
-        <p class="card-desc">Precision audio transcription in the browser — drop in a recording and Kleio chronicles it as fast, high-fidelity text from a serverless speech-to-text pipeline.</p>
-        <div class="card-foot">
-          <a class="card-link" href="https://kleio.helikos.dev" target="_blank" rel="noopener" aria-label="Enter Kleio (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>
-          <span class="card-status">Proof of Concept</span>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-glyph" aria-hidden="true">Μ</div>
-        <h3 class="card-name">Mnemosyne</h3>
-        <div class="card-role">3D Knowledge Galaxy</div>
-        <p class="card-desc">A personal second brain rendered as a navigable 3D galaxy — click a node and the universe assembles around it, your notes clustered by meaning and slowly orbiting.</p>
-        <div class="card-foot">
-          <a class="card-link" href="https://mnemosyne.helikos.dev" target="_blank" rel="noopener" aria-label="Enter Mnemosyne (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>
-          <span class="card-status">In Development</span>
-        </div>
-      </article>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="realm-rule" aria-hidden="true"></div>
-
-<!-- ── GAMES ── -->
-<section id="games" class="section" aria-labelledby="games-heading">
+<!-- ── TOWNS — lights down the mountain ── -->
+<section id="towns" class="towns" aria-labelledby="towns-heading">
+  <svg class="ridge" viewBox="0 0 1440 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path d="M0,240 L0,150 L250,70 L470,150 L690,52 L920,150 L1170,78 L1440,140 L1440,240 Z" fill="#181020"/>
+    <path d="M0,150 L250,70 L470,150 L690,52 L920,150 L1170,78 L1440,140" fill="none" stroke="rgba(201,162,39,0.22)" stroke-width="1.5"/>
+  </svg>
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">So Below</span>
-      <h2 id="games-heading">Games</h2>
-      <p>At the foot of Helikon, in the stadium, the games are held in the deities' honour.</p>
+      <h2 id="towns-heading">Lights on the Mountain</h2>
+      <p>Down the slope, small apps glow like towns at dusk — some open to visit, others still taking shape.</p>
     </div>
 
-    <div class="grid reveal">
-      <article class="card">
-        <div class="card-glyph" aria-hidden="true">♪</div>
-        <h3 class="card-name">PianoQuest</h3>
-        <div class="card-role">Music · RPG</div>
-        <p class="card-desc">An RPG that turns piano practice into a themed adventure — pick from five worlds, defeat enemies by completing songs, and collect gear across a procedurally built quest map.</p>
-        <div class="card-foot">
-          <a class="card-link" href="https://pianoquest.helikos.dev" target="_blank" rel="noopener" aria-label="Enter PianoQuest (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>
-          <span class="card-status live">Now competing</span>
+    <div class="slope reveal">
+      <article class="town glass">
+        <span class="town-light" aria-hidden="true"></span>
+        <div class="town-body">
+          <h3 class="town-name">PianoQuest</h3>
+          <div class="town-type">Music · RPG</div>
+          <p class="town-desc">An RPG that turns piano practice into a themed adventure — pick from five worlds, defeat enemies by completing songs, and collect gear across a procedurally built quest map.</p>
+          <div class="town-foot">
+            <a class="card-link" href="https://pianoquest.helikos.dev" target="_blank" rel="noopener" aria-label="Visit PianoQuest (opens in a new tab)">Visit <span aria-hidden="true">→</span></a>
+            <span class="card-status live">Lights on</span>
+          </div>
         </div>
       </article>
 
-      <article class="card is-dormant">
-        <div class="card-glyph" aria-hidden="true">Β</div>
-        <h3 class="card-name">Bitthrone</h3>
-        <div class="card-role">MOBA · 2D Brawler</div>
-        <p class="card-desc">A mobile-first, portrait, top-down 2D MOBA brawler built with Phaser 3 — fast arena combat in the palm of your hand. Its exhibition is forthcoming.</p>
-        <div class="card-foot">
-          <span class="card-status">In training</span>
+      <article class="town glass dim">
+        <span class="town-light" aria-hidden="true"></span>
+        <div class="town-body">
+          <h3 class="town-name">Bitthrone</h3>
+          <div class="town-type">MOBA · 2D Brawler</div>
+          <p class="town-desc">A mobile-first, portrait, top-down 2D MOBA brawler built with Phaser 3 — fast arena combat in the palm of your hand. Still under construction.</p>
+          <div class="town-foot">
+            <span class="card-status">Under construction</span>
+          </div>
         </div>
       </article>
 
-      <article class="card is-dormant">
-        <div class="card-glyph" aria-hidden="true">Κ</div>
-        <h3 class="card-name">Kybos</h3>
-        <div class="card-role">Dice · Chance</div>
-        <p class="card-desc">κύβος — the die. A game of chance under the eye of Tyche. Its lane is reserved; the contest is yet to begin.</p>
-        <div class="card-foot">
-          <span class="card-status">Awaiting the games</span>
+      <article class="town glass dim">
+        <span class="town-light" aria-hidden="true"></span>
+        <div class="town-body">
+          <h3 class="town-name">Kybos</h3>
+          <div class="town-type">Dice · Chance</div>
+          <p class="town-desc">κύβος — the die. A small game of chance under the eye of Tyche. Its ground is marked; the lights are not yet lit.</p>
+          <div class="town-foot">
+            <span class="card-status">Foundations laid</span>
+          </div>
         </div>
       </article>
     </div>
@@ -375,7 +397,7 @@
   <div class="wrap">
     <div class="scroll-rule" aria-hidden="true"></div>
     <p>Helikos weds Mount Helikon — home of the Muses, where the spring of inspiration was struck from the rock by the hoof of Pegasus — with kosmos, the ordered sky. As above, so below.</p>
-    <p class="plain">Helikos Labs builds small, AI-native apps in that spirit. The deities keep the heavens — tools named for the one whose craft they share — while the games are held below, in their honour. One sharp idea at a time, each kept live in the open.</p>
+    <p class="plain">Helikos Labs builds small, AI-native apps in that spirit. The deities keep the heavens — tools named for the one whose craft they share — while smaller apps glow below, like towns down the mountain. One sharp idea at a time, each kept live in the open.</p>
     <p class="antikythera">The oldest computer charted the heavens. So does this lab.</p>
   </div>
 </section>
@@ -390,20 +412,73 @@
 </footer>
 
 <script>
-  // ── Scatter the hero starfield ──
+  // ── Scatter starfields (hero + gods sky) ──
   (function(){
-    const layer = document.getElementById('heroStars');
-    if (!layer) return;
-    let html = '';
-    for (let i = 0; i < 70; i++) {
-      const s = (Math.random() * 1.8 + 0.4).toFixed(2);
-      const x = (Math.random() * 100).toFixed(2);
-      const y = (Math.random() * 78).toFixed(2);
-      const d = (Math.random() * 4).toFixed(2);
-      const o = (Math.random() * 0.5 + 0.2).toFixed(2);
-      html += `<span class="twinkle" style="width:${s}px;height:${s}px;left:${x}%;top:${y}%;animation-delay:${d}s;opacity:${o}"></span>`;
+    document.querySelectorAll('.starlayer').forEach(layer => {
+      const n = parseInt(layer.dataset.count || '70', 10);
+      let html = '';
+      for (let i = 0; i < n; i++) {
+        const s = (Math.random() * 1.8 + 0.4).toFixed(2);
+        const x = (Math.random() * 100).toFixed(2);
+        const y = (Math.random() * 94).toFixed(2);
+        const d = (Math.random() * 4).toFixed(2);
+        const o = (Math.random() * 0.5 + 0.2).toFixed(2);
+        html += `<span class="twinkle" style="width:${s}px;height:${s}px;left:${x}%;top:${y}%;animation-delay:${d}s;opacity:${o}"></span>`;
+      }
+      layer.innerHTML = html;
+    });
+  })();
+
+  // ── Gods: bright-star tablist drives the glass descriptor panel ──
+  (function(){
+    const GODS = {
+      athena:    { glyph: 'Α', name: 'Athena',    role: 'AI Creative Studio',     status: 'Proof of Concept', live: 'https://athena.helikos.dev',
+        desc: 'A unified creative studio for building worlds, writing novels, and generating comics — a photoreal writing “Study” wired to multi-modal generation.' },
+      kleio:     { glyph: 'Κ', name: 'Kleio',     role: 'Precision Transcription', status: 'Proof of Concept', live: 'https://kleio.helikos.dev',
+        desc: 'Precision audio transcription in the browser — drop in a recording and Kleio chronicles it as fast, high-fidelity text from a serverless speech-to-text pipeline.' },
+      mnemosyne: { glyph: 'Μ', name: 'Mnemosyne', role: '3D Knowledge Galaxy',     status: 'In Development',    live: 'https://mnemosyne.helikos.dev',
+        desc: 'A personal second brain rendered as a navigable 3D galaxy — click a node and the universe assembles around it, your notes clustered by meaning and slowly orbiting.' }
+    };
+    const tabs = Array.from(document.querySelectorAll('.god-star'));
+    const panel = document.getElementById('god-panel');
+    if (!tabs.length || !panel) return;
+    const el = {
+      glyph: panel.querySelector('.gp-glyph'),
+      role:  panel.querySelector('.gp-role'),
+      name:  panel.querySelector('.gp-name'),
+      desc:  panel.querySelector('.gp-desc'),
+      foot:  panel.querySelector('.gp-foot')
+    };
+    function select(tab, focus){
+      const g = GODS[tab.dataset.god];
+      if (!g) return;
+      tabs.forEach(t => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+      panel.setAttribute('aria-labelledby', tab.id);
+      el.glyph.textContent = g.glyph;
+      el.role.textContent  = g.role;
+      el.name.textContent  = g.name;
+      el.desc.textContent  = g.desc;
+      el.foot.innerHTML =
+        `<a class="card-link" href="${g.live}" target="_blank" rel="noopener" aria-label="Enter ${g.name} (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>` +
+        `<span class="card-status">${g.status}</span>`;
+      if (focus) tab.focus();
     }
-    layer.innerHTML = html;
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab, false));
+      tab.addEventListener('keydown', e => {
+        let next = null;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+        else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+        else if (e.key === 'Home') next = tabs[0];
+        else if (e.key === 'End') next = tabs[tabs.length - 1];
+        if (next) { e.preventDefault(); select(next, true); }
+      });
+    });
+    select(tabs[0], false);
   })();
 
   // ── Scroll-reveal: add .in as each .reveal enters view ──
