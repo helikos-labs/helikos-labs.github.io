@@ -67,9 +67,11 @@ in `index.html` — no Tailwind, no build, no `package.json`.
   **Lore** section; footer.
 - **Gods (stars + glass panel):** the `.god-stars` tablist (one `.god-star`
   button per god) updates the shared `.god-panel` from the **`GODS`** JS object
-  (glyph, role, name, desc, status, live) — roving `tabindex`, arrow/Home/End
+  (glyph, role, name, desc, status) — roving `tabindex`, arrow/Home/End
   keys, `aria-selected`, `aria-live` panel. Athena's panel is hardcoded as the
-  no-JS default. Active star gets a starlight glow + sparkle rays.
+  no-JS default. Active star gets a starlight glow + sparkle rays. Gods are all
+  work-in-progress, so the `.gp-foot` shows only a `.card-status` pill — no
+  launch link.
 - **Towns (mountain lights):** each `.town` is a self-contained `.glass` card
   (no JS) — `.town-light` (dimmed via `.town.dim` for unbuilt), `.town-name`,
   `.town-type`, `.town-desc`, and a `.town-foot` with a `Visit →` `.card-link`
@@ -102,9 +104,11 @@ in `index.html` — no Tailwind, no build, no `package.json`.
 Helikos (Mount Helikon + *kosmos*, the ordered sky) — apps are named after the
 deities and Muses of myth. **Gods** (the deity apps, "As Above", shown as stars)
 carry a short **role/category** (e.g. "Precision Transcription"); **Towns** ("So
-Below", lights down the mountain) carry a **type** (e.g. "Music · RPG"). Live apps
-surface a launch link (`Enter →` for gods, `Visit →` for towns) to
-`https://<name>.helikos.dev`. Keep the role/type lines terse.
+Below", lights down the mountain) carry a **type** (e.g. "Music · RPG").
+Everything is work-in-progress except **PianoQuest**, so only PianoQuest surfaces
+a launch link (`Visit →` to `https://pianoquest.helikos.dev`); every other app
+shows a status pill and **no link** until it goes live. Keep the role/type lines
+terse.
 
 ## The apps (portfolio)
 

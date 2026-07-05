@@ -330,7 +330,6 @@
         <h3 class="gp-name">Athena</h3>
         <p class="gp-desc">A unified creative studio for building worlds, writing novels, and generating comics — a photoreal writing “Study” wired to multi-modal generation.</p>
         <div class="gp-foot">
-          <a class="card-link" href="https://athena.helikos.dev" target="_blank" rel="noopener" aria-label="Enter Athena (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>
           <span class="card-status">Proof of Concept</span>
         </div>
       </div>
@@ -397,7 +396,7 @@
   <div class="wrap">
     <div class="scroll-rule" aria-hidden="true"></div>
     <p>Helikos weds Mount Helikon — home of the Muses, where the spring of inspiration was struck from the rock by the hoof of Pegasus — with kosmos, the ordered sky. As above, so below.</p>
-    <p class="plain">Helikos Labs builds small, AI-native apps in that spirit. The deities keep the heavens — tools named for the one whose craft they share — while smaller apps glow below, like towns down the mountain. One sharp idea at a time, each kept live in the open.</p>
+    <p class="plain">Helikos Labs builds small, AI-native apps in that spirit. The deities keep the heavens — tools named for the one whose craft they share — while smaller apps glow below, like towns down the mountain. One sharp idea at a time, each built in the open.</p>
     <p class="antikythera">The oldest computer charted the heavens. So does this lab.</p>
   </div>
 </section>
@@ -432,11 +431,11 @@
   // ── Gods: bright-star tablist drives the glass descriptor panel ──
   (function(){
     const GODS = {
-      athena:    { glyph: 'Α', name: 'Athena',    role: 'AI Creative Studio',     status: 'Proof of Concept', live: 'https://athena.helikos.dev',
+      athena:    { glyph: 'Α', name: 'Athena',    role: 'AI Creative Studio',     status: 'Proof of Concept',
         desc: 'A unified creative studio for building worlds, writing novels, and generating comics — a photoreal writing “Study” wired to multi-modal generation.' },
-      kleio:     { glyph: 'Κ', name: 'Kleio',     role: 'Precision Transcription', status: 'Proof of Concept', live: 'https://kleio.helikos.dev',
+      kleio:     { glyph: 'Κ', name: 'Kleio',     role: 'Precision Transcription', status: 'Proof of Concept',
         desc: 'Precision audio transcription in the browser — drop in a recording and Kleio chronicles it as fast, high-fidelity text from a serverless speech-to-text pipeline.' },
-      mnemosyne: { glyph: 'Μ', name: 'Mnemosyne', role: '3D Knowledge Galaxy',     status: 'In Development',    live: 'https://mnemosyne.helikos.dev',
+      mnemosyne: { glyph: 'Μ', name: 'Mnemosyne', role: '3D Knowledge Galaxy',     status: 'In Development',
         desc: 'A personal second brain rendered as a navigable 3D galaxy — click a node and the universe assembles around it, your notes clustered by meaning and slowly orbiting.' }
     };
     const tabs = Array.from(document.querySelectorAll('.god-star'));
@@ -462,9 +461,7 @@
       el.role.textContent  = g.role;
       el.name.textContent  = g.name;
       el.desc.textContent  = g.desc;
-      el.foot.innerHTML =
-        `<a class="card-link" href="${g.live}" target="_blank" rel="noopener" aria-label="Enter ${g.name} (opens in a new tab)">Enter <span aria-hidden="true">→</span></a>` +
-        `<span class="card-status">${g.status}</span>`;
+      el.foot.innerHTML = `<span class="card-status">${g.status}</span>`;
       if (focus) tab.focus();
     }
     tabs.forEach((tab, i) => {
