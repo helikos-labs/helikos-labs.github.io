@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy · Helikos Labs</title>
+<meta name="description" content="How the Helikos Labs site and its apps handle your information, including the Google AdSense advertising that keeps some apps free." />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://www.helikos.dev/privacy/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080b14'/%3E%3Ccircle cx='32' cy='19' r='6' fill='%23c9a227'/%3E%3Cpath d='M6 52 L26 26 L38 40 L46 30 L58 52 Z' fill='none' stroke='%23c9a227' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --void: #080b14; --night: #0e1424; --night-2: #131b30;
+    --star: #f5f0e3; --mist: #9aa6c2; --mist-dim: #76829e;
+    --brass: #c9a227; --brass-light: #ecd07a; --line: rgba(201,162,39,0.18);
+    --display: 'Cinzel', serif; --serif: 'Cormorant Garamond', Georgia, serif; --mono: 'JetBrains Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: radial-gradient(ellipse at 50% -10%, rgba(201,162,39,0.10), transparent 55%), var(--void);
+    color: var(--mist); font-family: var(--serif); font-size: 19px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased; min-height: 100vh;
+  }
+  ::selection { background: rgba(201,162,39,0.3); color: var(--star); }
+  a { color: var(--brass-light); text-decoration: underline; text-decoration-color: rgba(236,208,122,0.4); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--brass-light); }
+  a:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  nav { border-bottom: 1px solid var(--line); }
+  .nav-inner { max-width: 760px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brandmark { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+  .brandmark .sigil { width: 22px; height: 22px; color: var(--brass); }
+  .brandmark .name { font-family: var(--display); font-size: 15px; letter-spacing: 4px; color: var(--star); font-weight: 600; }
+  .back { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mist-dim); text-decoration: none; }
+  .back:hover { color: var(--brass-light); }
+  main.wrap { padding-top: 56px; padding-bottom: 72px; }
+  .label { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--brass); }
+  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(30px, 6vw, 44px); letter-spacing: 3px; color: var(--star); line-height: 1.15; margin: 10px 0 6px; }
+  .updated { font-family: var(--mono); font-size: 12px; letter-spacing: 1px; color: var(--mist-dim); margin-bottom: 32px; }
+  .summary { border: 1px solid var(--line); border-radius: 12px; background: rgba(19,27,48,0.6); padding: 18px 22px; margin-bottom: 12px; color: var(--star); }
+  h2 { font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: 2px; color: var(--star); margin: 40px 0 10px; }
+  p + p { margin-top: 12px; }
+  ul { padding-left: 22px; margin-top: 6px; }
+  li + li { margin-top: 6px; }
+  strong { color: var(--star); font-weight: 600; }
+  footer { border-top: 1px solid var(--line); padding: 26px 0; }
+  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; color: var(--mist-dim); }
+  .foot a { color: inherit; text-decoration: none; }
+  .foot a:hover { color: var(--brass-light); }
+  @media (max-width: 600px) { body { font-size: 18px; } .wrap, .nav-inner { padding-left: 18px; padding-right: 18px; } main.wrap { padding-top: 40px; } }
+</style>
+</head>
+<body>
+<nav aria-label="Primary">
+  <div class="nav-inner">
+    <a href="/" class="brandmark" aria-label="Helikos Labs home">
+      <svg class="sigil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="M2 21 L9 8 L13 15 L16 10 L22 21 Z"/>
+        <circle cx="16.5" cy="4.5" r="2.2"/>
+        <path d="M16.5 1.6 v1 M16.5 7.4 v1 M13.6 4.5 h1 M19.4 4.5 h1"/>
+      </svg>
+      <span class="name">HELIKOS LABS</span>
+    </a>
+    <a href="/" class="back">← Home</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <p class="label">Helikos Labs</p>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated 26 September 2026</p>
+
+  <div class="summary">
+    <p>In short: this site sets no cookies of its own, runs no analytics and asks you for nothing. Some Helikos Labs apps show Google ads to stay free, and Google uses cookies to serve them.</p>
+  </div>
+
+  <h2>What this covers</h2>
+  <p>This policy covers helikos.dev and www.helikos.dev, the Helikos Labs site. Apps on helikos.dev subdomains are separate sites. IQ Radar's policy is at <a href="https://iqradar.helikos.dev/privacy/">iqradar.helikos.dev/privacy</a>.</p>
+
+  <h2>What this site collects</h2>
+  <p>Nothing directly. There are no accounts, forms, cookies or analytics. Now and then the page requests a small file from this site to check whether a newer version has been published. That request carries no personal data.</p>
+
+  <h2>Service providers</h2>
+  <ul>
+    <li><strong>Hosting.</strong> GitHub Pages hosts this site. GitHub logs visitors' IP addresses for security purposes, whether or not they have a GitHub account. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub's privacy statement</a>.</li>
+    <li><strong>Fonts.</strong> The Cinzel, Cormorant Garamond and JetBrains Mono typefaces load from Google Fonts, so Google receives your IP address and browser details when your browser fetches them. See <a href="https://policies.google.com/privacy" rel="noopener">Google's privacy policy</a>.</li>
+  </ul>
+
+  <h2>Advertising on Helikos Labs apps</h2>
+  <p>Helikos Labs apps such as IQ Radar show ads from Google AdSense.</p>
+  <ul>
+    <li>Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website or other websites.</li>
+    <li>Google's use of advertising cookies enables it and its partners to serve ads to you based on your visits to Helikos Labs sites and other sites on the internet.</li>
+    <li>Other third-party vendors or ad networks may also use cookies to serve ads on Helikos Labs sites.</li>
+    <li>You can opt out of personalised advertising in <a href="https://adssettings.google.com" rel="noopener">Google's Ads Settings</a>. You can also opt out of some third-party vendors' use of cookies for personalised advertising at <a href="https://www.aboutads.info/choices" rel="noopener">aboutads.info/choices</a> or, in Europe, <a href="https://www.youronlinechoices.eu" rel="noopener">youronlinechoices.eu</a>.</li>
+    <li>Where the law requires consent for advertising cookies, including in the European Economic Area, the United Kingdom and Switzerland, you are asked through Google's consent message before they are used, and you can change your choice at any time.</li>
+  </ul>
+  <p>Google explains its practices in <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">How Google uses information from sites or apps that use its services</a>.</p>
+
+  <h2>Links to other sites</h2>
+  <p>Links to GitHub and to Helikos Labs apps take you to sites with their own practices, described on those sites.</p>
+
+  <h2>Children</h2>
+  <p>This site is not directed at children under 13.</p>
+
+  <h2>Your choices and rights</h2>
+  <p>We hold no personal data about visitors, so there is nothing for us to access, correct or delete. For data held by GitHub or Google, use their own tools and policies. Advertising choices are linked above.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy changes, we will post the new version on this page and update the date at the top.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy: <a href="mailto:privacy@helikos.dev">privacy@helikos.dev</a>.</p>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Helikos Labs · Of the mountain of the Muses</span>
+    <span><a href="/">Home</a></span>
+  </div>
+</footer>
+</body>
+</html>

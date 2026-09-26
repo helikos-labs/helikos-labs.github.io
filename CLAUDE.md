@@ -24,6 +24,7 @@ to preview; push to the default branch to deploy.
 ├── CLAUDE.md           # This file
 ├── CNAME               # Custom domain (www.helikos.dev)
 ├── ads.txt             # Google AdSense seller record for *.helikos.dev (apps carry the ad units)
+├── privacy/index.html  # Privacy policy with the AdSense disclosures; same identity, linked from the footer
 └── .github/            # GitHub Pages / workflow config
 ```
 
