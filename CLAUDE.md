@@ -23,6 +23,7 @@ to preview; push to the default branch to deploy.
 ├── scripts/bump-version.mjs # Increments version.json + index.html's app-build meta
 ├── CLAUDE.md           # This file
 ├── CNAME               # Custom domain (www.helikos.dev)
+├── ads.txt             # Google AdSense seller record for *.helikos.dev (apps carry the ad units)
 └── .github/            # GitHub Pages / workflow config
 ```
 
